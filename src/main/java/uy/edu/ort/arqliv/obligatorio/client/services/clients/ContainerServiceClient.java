@@ -19,7 +19,7 @@ public class ContainerServiceClient {
 	 * setter apra inyeccion de spring
 	 * @param containerService
 	 */
-	public void setcontainerService(ContainerService containerService) {
+	public void setContainerService(ContainerService containerService) {
 		this.containerService = containerService;
 	}
 	/**
