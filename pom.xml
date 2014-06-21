@@ -53,6 +53,13 @@
 			<version>${spring-framework.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+
+
 		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -134,31 +141,31 @@
 			<version>0.0.2</version>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
-<!-- 			<artifactId>common-cli</artifactId> -->
-<!-- 			<version>${common-cli.version}</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<artifactId>hibernate-entitymanager</artifactId> -->
-<!-- 					<groupId>org.hibernate</groupId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
+		<!-- <artifactId>common-cli</artifactId> -->
+		<!-- <version>${common-cli.version}</version> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>hibernate-entitymanager</artifactId> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
 
 
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
-<!-- 			<artifactId>dominio</artifactId> -->
-<!-- 			<version>0.0.1</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<artifactId>hibernate-entitymanager</artifactId> -->
-<!-- 					<groupId>org.hibernate</groupId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
+		<!-- <artifactId>dominio</artifactId> -->
+		<!-- <version>0.0.1</version> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>hibernate-entitymanager</artifactId> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>org.spockframework</groupId>
@@ -169,6 +176,11 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jndi</artifactId>
 			<version>8.1.14.v20131031</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-remote-shell</artifactId>
+			<version>1.0.0.RELEASE</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -191,7 +203,7 @@
 
 				<configuration>
 					<!-- <webXml>WEB-INF/web.xml</webXml> -->
-<!-- 					<outputDirectory>${apacheDir}/webapps/</outputDirectory> -->
+					<!-- <outputDirectory>${apacheDir}/webapps/</outputDirectory> -->
 
 					<!-- <webappDirectory>E:/ORT/2014/apache-tomcat-8.0.8/webapps/${project.build.finalName}</webappDirectory> -->
 				</configuration>

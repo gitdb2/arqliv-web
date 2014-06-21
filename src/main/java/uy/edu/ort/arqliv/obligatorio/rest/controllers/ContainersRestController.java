@@ -1,15 +1,10 @@
-package uy.edu.ort.arqliv.obligatorio.rest.controllers.ships;
+package uy.edu.ort.arqliv.obligatorio.rest.controllers;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,51 +15,54 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import uy.edu.ort.arqliv.obligatorio.common.ShipService;
-import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomInUseServiceException;
+import uy.edu.ort.arqliv.obligatorio.common.ContainerService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
-import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
+import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 
 @RestController
-@RequestMapping(value = "/ships")
-public class ShipsRestController {
+@RequestMapping(value = "/containers")
+public class ContainersRestController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ShipsRestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ContainersRestController.class);
 
 	@Autowired
-	ShipService shipService;
+	ContainerService containerService;
 
 
 	/**
-	 * Crea un barco en la DB y retorna su id
-	 * @param ship
+	 * Crea un Contenedor en el sistema, se retorna el id
+	 * En caso de error se tira excepcion
+	 * @param container
 	 * @return
 	 * @throws CustomServiceException
 	 */
 	@RequestMapping(value = "/create", method = RequestMethod.PUT,  headers = "Accept=application/json")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
-	public Long create(@RequestParam(value="user", required=true) String user, @RequestBody Ship ship) throws CustomServiceException {
-		logger.info("Create : "+ user + "  " + ship.toStringConsola());
-		return shipService.store(user, ship);
+	public Long create(
+			@RequestParam(value="user", required=true) String user, 
+			@RequestBody Container container) throws CustomServiceException {
+		logger.info("Create : "+ user + "  " + container.toStringConsola());
+		return containerService.store(user, container);
 	}
 	
 	
-
+	/**
+	 * LIsta todos los contenedores en el sistema
+	 * @return
+	 * @throws CustomServiceException
+	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET,  headers = "Accept=application/json")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
-	public List<Ship> list(@RequestParam(value="user", required=true) String user) {
+	public List<Container> list(@RequestParam(value="user", required=true) String user) {
 		logger.info("List: " + user);
-		return shipService.list(user);
+		return containerService.list(user);
 	}
 	
 	/**
-	 * Actualiza la informacion de un barco para una determinada 
-	 * fecha (regla de negocio: no se puede modificar la capacidad de 
-	 * un barco si no arribo al puerto en essa fecha)
+	 * Actualiza la informacion del contenedor (el campo id debe estar cargado)
 	 * @param ship
-	 * @param arrivalDate
 	 * @return
 	 * @throws CustomServiceException
 	 */
@@ -73,16 +71,14 @@ public class ShipsRestController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public Long update(
 			@RequestParam(value="user", required=true) String user, 
-			@RequestBody Ship ship, 
-			@RequestParam(value="arrivalDate", required=true) 
-			@DateTimeFormat(pattern="yyyyMMdd") Date arrivalDate) throws CustomServiceException {
-		logger.info("update : "+ user +  " " + ship.toStringConsola() + " "+ arrivalDate);
+			@RequestBody Container container) throws CustomServiceException {
+		logger.info("update : "+ user +  " " + container.toStringConsola());
 
-		return shipService.update(user, ship, arrivalDate);
+		return containerService.update(user, container);
 	}
 
 	/**
-	 * Retoran un barco por id
+	 * Se obtiene un contenedor por id
 	 * @param id
 	 * @return
 	 * @throws CustomServiceException
@@ -90,17 +86,17 @@ public class ShipsRestController {
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET,  headers = "Accept=application/json")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
-	public Ship find(
+	public Container find(
 			@RequestParam(value="user", required=true) String user, 
 			@PathVariable(value="id") long id) throws CustomServiceException {
 		logger.info("update : "+ user +  " " + id);
 
 
-		return shipService.find(user, id);
+		return containerService.find(user, id);
 	}
 
 	/**
-	 * da de baja un barco por id, si no esta usado en nungun arribo, de lo contrario tira excpcion
+	 * Elimina un contenedor por id, tira expcion en caso de estar en uso o no poderse realizar la operacion
 	 * @param id
 	 * @throws CustomServiceException
 	 */
@@ -112,44 +108,7 @@ public class ShipsRestController {
 			@PathVariable(value="id") long id) throws CustomServiceException {
 		logger.info("update : "+ user +  " " + id);
 
-		shipService.delete(user, id);
+		containerService.delete(user, id);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "/error", method = RequestMethod.GET,  headers = "Accept=application/json")
-	@ResponseBody
-	@ResponseStatus(value = HttpStatus.OK)
-	public List<Ship> error(Locale locale, HttpSession session) {
-		System.out.println(session.getAttribute("test"));
-		throw new CustomInUseServiceException("esta en uso");
-//		throw new RestServiceException("Forzada", 777);
-	}
-
 }
