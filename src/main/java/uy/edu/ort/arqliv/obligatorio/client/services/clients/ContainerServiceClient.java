@@ -19,9 +19,10 @@ public class ContainerServiceClient {
 	 * setter apra inyeccion de spring
 	 * @param containerService
 	 */
-	public void setcontainerService(ContainerService containerService) {
+	public void setContainerService(ContainerService containerService) {
 		this.containerService = containerService;
 	}
+	
 	/**
 	 * Crea un Contenedor en el sistema, se retorna el id
 	 * En caso de error se tira excepcion
