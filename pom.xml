@@ -134,31 +134,31 @@
 			<version>0.0.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>uy.edu.ort.arqliv.obligatorio</groupId>
-			<artifactId>common-cli</artifactId>
-			<version>${common-cli.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>hibernate-entitymanager</artifactId>
-					<groupId>org.hibernate</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
+<!-- 			<artifactId>common-cli</artifactId> -->
+<!-- 			<version>${common-cli.version}</version> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>hibernate-entitymanager</artifactId> -->
+<!-- 					<groupId>org.hibernate</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
 
 
 
-		<dependency>
-			<groupId>uy.edu.ort.arqliv.obligatorio</groupId>
-			<artifactId>dominio</artifactId>
-			<version>0.0.1</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>hibernate-entitymanager</artifactId>
-					<groupId>org.hibernate</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
+<!-- 			<artifactId>dominio</artifactId> -->
+<!-- 			<version>0.0.1</version> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>hibernate-entitymanager</artifactId> -->
+<!-- 					<groupId>org.hibernate</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
 
 	</dependencies>
 	<build>

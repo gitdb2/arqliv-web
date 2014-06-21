@@ -7,10 +7,10 @@
         <dependent-module archiveName="negocio-0.0.2.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arqliv-negocio/arqliv-negocio">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="persistencia-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arqliv-persistencia/arqliv-persistencia">
+        <dependent-module archiveName="common-cli-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arqliv-common-cli/arqliv-common-cli">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="common-cli-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arqliv-common-cli/arqliv-common-cli">
+        <dependent-module archiveName="persistencia-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arqliv-persistencia/arqliv-persistencia">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="dominio-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arqliv-dominio/arqliv-dominio">
