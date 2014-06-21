@@ -34,6 +34,7 @@ public class ContainerServiceClient {
 	public Long create(String login, Container container) throws CustomServiceException {
 		return containerService.store(login, container);
 	}
+	
 	/**
 	 * LIsta todos los contenedores en el sistema
 	 * @param login 
@@ -43,6 +44,7 @@ public class ContainerServiceClient {
 	public List<Container> list(String login) throws CustomServiceException {
 		return containerService.list(login);
 	}
+	
 	/**
 	 * Actualiza la informacion del contenedor (el campo id debe estar cargado)
 	 * @param login 
@@ -74,4 +76,5 @@ public class ContainerServiceClient {
 	public void delete(String login, long id) throws CustomServiceException {
 		containerService.delete(login, id);
 	}
+	
 }
