@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import uy.edu.ort.arqliv.obligatorio.client.services.clients.ShipServiceClient;
+import uy.edu.ort.arqliv.obligatorio.common.ShipService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 
@@ -27,8 +27,8 @@ public class ShipController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ShipController.class);
 	
-//	@Autowired
-	ShipServiceClient shipClient;
+	@Autowired
+	private ShipService shipService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -39,7 +39,7 @@ public class ShipController {
 		
 		List<Ship> ships = new ArrayList<>();
 		try {
-			ships = shipClient.list("rodrigo");
+			ships = shipService.list("rodrigo");
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}

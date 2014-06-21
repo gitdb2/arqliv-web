@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import uy.edu.ort.arqliv.obligatorio.client.services.clients.ShipServiceClient;
+import uy.edu.ort.arqliv.obligatorio.common.ShipService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 
@@ -25,25 +25,25 @@ public class ShipsRestController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(ShipsRestController.class);
 
-//	@Autowired
-	ShipServiceClient shipClient;
+	@Autowired
+	ShipService shipClient;
 
 	@RequestMapping(value = "/ships/list", method = RequestMethod.GET)//, headers = "Accept=application/json, application/xml")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<Ship> list(Locale locale) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+//		logger.info("Welcome home! The client locale is {}.", locale);
 
 		List<Ship> ships = new ArrayList<>();
 		
 		
-		ships.add(new Ship(33, 2, 3, "dddddd", 999, "pepe"));
-//		try {
-//			ships = shipClient.list("rodrigo");
+//		ships.add(new Ship(33, 2, 3, "dddddd", 999, "pepe"));
+		try {
+			ships = shipClient.list("rodrigo");
 
-//		} catch (CustomServiceException e) {
-//			e.printStackTrace();
-//		}
+		} catch (CustomServiceException e) {
+			e.printStackTrace();
+		}
 		return ships;
 	}
 
