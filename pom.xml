@@ -171,6 +171,11 @@
 			<artifactId>spock-core</artifactId>
 			<version>0.7-groovy-2.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jndi</artifactId>
+			<version>8.1.14.v20131031</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.build.finalName}</finalName>
