@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomInUseServiceException;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.ErrorInfo;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.RestServiceException;
 
@@ -28,7 +29,19 @@ public class RestExceptionProcessor {
 		String errorMessage = ex.getMessage();
 		String errorURL = req.getRequestURL().toString();
 		
-		return new ErrorInfo(errorMessage, ex.getCode(), errorURL);
+		return new ErrorInfo(errorMessage, ex.getCode(), errorURL, ex.getClass().getName());
 	}
 
+	
+	@ExceptionHandler(CustomInUseServiceException.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseBody
+	public ErrorInfo inUse(HttpServletRequest req, CustomInUseServiceException ex) {
+		String errorMessage = ex.getMessage();
+		String errorURL = req.getRequestURL().toString();
+		
+		return new ErrorInfo(errorMessage, -1, errorURL, ex.getClass().getName());
+	}
+	
+	
 }

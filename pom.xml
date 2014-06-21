@@ -186,7 +186,7 @@
 
 				<configuration>
 					<!-- <webXml>WEB-INF/web.xml</webXml> -->
-					<outputDirectory>${apacheDir}/webapps/</outputDirectory>
+<!-- 					<outputDirectory>${apacheDir}/webapps/</outputDirectory> -->
 
 					<!-- <webappDirectory>E:/ORT/2014/apache-tomcat-8.0.8/webapps/${project.build.finalName}</webappDirectory> -->
 				</configuration>
