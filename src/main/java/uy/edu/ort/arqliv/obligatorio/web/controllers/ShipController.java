@@ -47,11 +47,11 @@ public class ShipController {
 		return "ships/list";
 	}
 	
-	@RequestMapping(value = "/create", method = RequestMethod.GET) 
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String setupCreate(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("ship", new Ship());
-		return "ships/create"; 
+		return "ships/create";
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)

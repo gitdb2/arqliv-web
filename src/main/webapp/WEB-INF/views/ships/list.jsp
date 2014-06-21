@@ -18,6 +18,7 @@
 	                <th>Bandera</th>
 	                <th>Año de fabricación</th>
 	                <th>Nombre</th>
+	                <th>Acciones</th>
 	 	    </tr>
 	        <c:forEach var="ship" items="${ships}">
 	            <tr>
@@ -28,6 +29,11 @@
 	                <td>${ship.flag}</td>
 	                <td>${ship.manufactoringYear}</td>
 	                <td>${ship.name}</td>
+	                <td style="display:inline-block">
+	                	<a href="editShip.html?id=${ship.id}">Modificar</a> 
+	                	| 
+	                	<a href="deleteShip.html?id=${ship.id}">Eliminar</a>
+                    </td>
 	            </tr>
 	        </c:forEach>
 	    </table>
