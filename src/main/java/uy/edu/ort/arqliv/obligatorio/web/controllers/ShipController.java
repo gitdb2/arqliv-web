@@ -1,8 +1,6 @@
 package uy.edu.ort.arqliv.obligatorio.web.controllers;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,7 +27,7 @@ public class ShipController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ShipController.class);
 	
-	@Autowired
+//	@Autowired
 	ShipServiceClient shipClient;
 	
 	/**

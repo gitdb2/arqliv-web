@@ -20,8 +20,7 @@
 		<!-- Web -->
 		<jsp.version>2.2</jsp.version>
 		<jstl.version>1.2</jstl.version>
-		<servlet.version>2.5</servlet.version>
-
+		<servlet.version>3.1.0</servlet.version>
 
 		<!-- Spring -->
 		<spring-framework.version>4.0.3.RELEASE</spring-framework.version>
@@ -39,6 +38,10 @@
 		<!-- Nuestras -->
 		<common-cli.version>0.0.1</common-cli.version>
 
+		<!-- Jackson -->
+ 		<jackson.databind-version>2.3.0</jackson.databind-version>
+ 	
+
 	</properties>
 
 	<dependencies>
@@ -50,6 +53,13 @@
 			<version>${spring-framework.version}</version>
 		</dependency>
 
+ 		<!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.databind-version}</version>
+        </dependency>
+
 		<!-- Other Web dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -58,7 +68,7 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
+			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -90,14 +100,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Hibernate -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- <artifactId>hibernate-entitymanager</artifactId> -->
-		<!-- <version>${hibernate.version}</version> -->
-		<!-- </dependency> -->
-
-
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -125,26 +127,18 @@
 		</dependency>
 
 
-		<!-- <dependency> -->
-		<!-- <groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
-		<!-- <artifactId>negocio</artifactId> -->
-		<!-- <version>0.0.1</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
-		<!-- <artifactId>common-cli</artifactId> -->
-		<!-- <version>0.0.1</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
-		<!-- <artifactId>persistencia</artifactId> -->
-		<!-- <version>0.0.1</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>uy.edu.ort.arqliv.obligatorio</groupId> -->
-		<!-- <artifactId>dominio</artifactId> -->
-		<!-- <version>0.0.1</version> -->
-		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>uy.edu.ort.arqliv.obligatorio</groupId>
+			<artifactId>dominio</artifactId>
+			<version>0.0.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hibernate-entitymanager</artifactId>
+					<groupId>org.hibernate</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 	</dependencies>
 	<build>
