@@ -64,7 +64,7 @@ public class ShipController {
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
-		return "ships/list";
+		return "redirect:/ships/list.html";
 	}
 	
 }
