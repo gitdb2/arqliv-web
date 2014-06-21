@@ -32,7 +32,7 @@
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/app/*</url-pattern>
+		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
 
 

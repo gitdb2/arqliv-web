@@ -16,7 +16,7 @@
 		
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<context:component-scan base-package="uy.edu.ort.arqliv.obligatorio"/>
+	<context:component-scan base-package="uy.edu.ort.arqliv.obligatorio.persistencia"/>
 
 	<context:annotation-config />
 	

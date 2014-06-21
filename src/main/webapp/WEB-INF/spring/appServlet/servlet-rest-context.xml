@@ -12,12 +12,12 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 	<context:annotation-config />
-	<context:component-scan base-package="uy.edu.ort.arqliv.obligatorio.web.rest.controllers" />
+	<context:component-scan base-package="uy.edu.ort.arqliv.obligatorio.rest.controllers" />
 	
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="prefix" value="/WEB-INF/jsp/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	

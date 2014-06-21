@@ -1,4 +1,4 @@
-package uy.edu.ort.arqliv.obligatorio.web.rest.controllers.ships;
+package uy.edu.ort.arqliv.obligatorio.rest.controllers.ships;
 
 import java.util.ArrayList;
 import java.util.List;
