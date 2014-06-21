@@ -1,4 +1,4 @@
-package uy.edu.ort.arqliv.obligatorio.web.controllers.ships;
+package uy.edu.ort.arqliv.obligatorio.web.rest.controllers.ships;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 
 @Controller
-@RequestMapping(value = "/rest")
+@RequestMapping(value = "/ships")
 public class ShipsRestController {
 
 	private static final Logger logger = LoggerFactory
@@ -28,7 +28,7 @@ public class ShipsRestController {
 	@Autowired
 	ShipService shipClient;
 
-	@RequestMapping(value = "/ships/list", method = RequestMethod.GET)//, headers = "Accept=application/json, application/xml")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)//, headers = "Accept=application/json, application/xml")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<Ship> list(Locale locale) {
