@@ -14,17 +14,17 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 
-				<a class="btn btn-primary btn-lg btn-block" href="${pageContext.servletContext.contextPath}/ships/list.html">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
 					Barcos</a>
-				<a class="btn btn-primary btn-lg btn-block" href="${pageContext.servletContext.contextPath}/containers/list.html">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
 					Contenedores</a>
-				<a class="btn btn-primary btn-lg btn-block" href="${pageContext.servletContext.contextPath}/arrivals/list.html">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/arrivals/list.html"/>">
 					Arribos</a>
-				<a class="btn btn-primary btn-lg btn-block" href="${pageContext.servletContext.contextPath}/departures/list.html">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/departures/list.html"/>">
 					Partidas</a>
-				<a class="btn btn-primary btn-lg btn-block" href="${pageContext.servletContext.contextPath}/sreports/list.html">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/sreports/list.html"/>">
 					Reportes</a>
-				<a class="btn btn-primary btn-lg btn-block" href="${pageContext.servletContext.contextPath}profiling/list.html">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="profiling/list.html"/>">
 					Profiling</a>
 
 
