@@ -43,6 +43,9 @@
 		<p>No hay Barcos en el sistema</p>
 	</c:if>
 	
+	<br />	
+	<a href="${pageContext.servletContext.contextPath}/ships/getPdfList.html">Exportar listado a PDF</a>
+	
 	<script	src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
 	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular-resource.min.js"></script>

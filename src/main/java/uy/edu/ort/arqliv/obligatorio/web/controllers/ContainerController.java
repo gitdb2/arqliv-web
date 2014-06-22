@@ -9,6 +9,10 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uy.edu.ort.arqliv.obligatorio.common.ContainerService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Container;
+import uy.edu.ort.arqliv.obligatorio.web.pdf.PDFRenderer;
 
 /**
  * Controller para atender las paginas que esten relacionadas con los barcos
@@ -113,6 +118,52 @@ public class ContainerController {
 			e.printStackTrace();
 		}
 		return "redirect:/containers/list.html";
+	}
+	
+	@RequestMapping(value = "/getPdfList", method =  { RequestMethod.GET, RequestMethod.POST} )
+	public ResponseEntity<byte[]> postPDF(Locale locale, Model model) {
+		List<Container> containers = new ArrayList<>();
+		try {
+			containers = containerService.list("rodrigo");
+		} catch (CustomServiceException e) {
+			e.printStackTrace();
+		}
+		String filename = "containers_"+ System.currentTimeMillis();
+		String fileExtension = ".pdf";
+		PDFRenderer renderer = new PDFRenderer(filename, "Listado de Contenedores", getPdfTitles(), getPdfLines(containers), "");
+		byte[] contents = renderer.render();
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.parseMediaType("application/pdf"));
+	    headers.setContentDispositionFormData(filename + fileExtension, filename + fileExtension);
+	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents, headers, HttpStatus.OK);
+	    return response;
+	}
+	
+	private String getPdfTitles() {
+		return String.format
+				 ("%10s  " // ID
+				+ "%15s  " // "Codigo",
+				+ "%-30s " // "Marca",
+				+ "%-30s " // "Modelo",
+				+ "%15s" // "Capacidad"
+		, "Id", "Codigo", "Marca", "Modelo", "Capacidad");
+	}
+	
+	private List<String> getPdfLines(List<Container> containers) {
+		List<String> lines = new ArrayList<>();
+		for (int i = 0; i < containers.size(); i++) {
+			Container container = containers.get(i);
+			lines.add(String.format
+					 ("%10d  " // ID
+					+ "%15d  " // "Codigo",
+					+ "%-30s " // "Marca",
+					+ "%-30s " // "Modelo",
+					+ "%15.2f" // "Capacidad"
+			,
+			container.getId(), container.getCode(), container.getBrand(), container.getModel(), container.getCapacity()));
+		}
+		return lines;
 	}
 	
 }
