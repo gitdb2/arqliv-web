@@ -27,23 +27,6 @@ public class ArrivalsRestController {
 
 	@Autowired
 	ArrivalService arrivalService;
-
-	@RequestMapping(value = "/test", method = RequestMethod.GET,  headers = "Accept=application/json")
-	@ResponseBody
-	@ResponseStatus(value = HttpStatus.OK)
-	public Long test(
-			@RequestParam(value="user", required=true) String user,
-			@RequestParam(value="shipId", required=true) Long shipId, 
-			@RequestParam(value="c") List<Long> containers)
-//			@RequestBody Arrival arrival) 
-					throws CustomServiceException {
-		
-		
-		System.out.println(containers);
-		
-		return 2L;
-		
-	}
 	
 
 	/**

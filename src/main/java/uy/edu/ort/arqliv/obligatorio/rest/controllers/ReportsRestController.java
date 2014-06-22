@@ -26,8 +26,6 @@ public class ReportsRestController {
 
 	@Autowired
 	ReportsService reportsService;
-
-
 	
 	/***
 	 * Retorna los arrivals que para un mes (1 Enero)
