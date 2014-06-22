@@ -1,4 +1,4 @@
-package uy.edu.ort.arqliv.obligatorio.rest.controllers.ships;
+package uy.edu.ort.arqliv.obligatorio.rest.controllers;
 
 import java.util.Date;
 import java.util.List;
@@ -41,10 +41,12 @@ public class ShipsRestController {
 	 * @return
 	 * @throws CustomServiceException
 	 */
-	@RequestMapping(value = "/create", method = RequestMethod.PUT,  headers = "Accept=application/json")
+	@RequestMapping(value = "/create", method = RequestMethod.POST,  headers = "Accept=application/json")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
-	public Long create(@RequestParam(value="user", required=true) String user, @RequestBody Ship ship) throws CustomServiceException {
+	public Long create(
+			@RequestParam(value="user", required=true) String user, 
+			@RequestBody Ship ship) throws CustomServiceException {
 		logger.info("Create : "+ user + "  " + ship.toStringConsola());
 		return shipService.store(user, ship);
 	}
