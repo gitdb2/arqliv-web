@@ -18,7 +18,7 @@
 					Barcos</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
 					Contenedores</a>
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/arrivals/list.html"/>">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/arrivals/menu.html"/>">
 					Arribos</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/departures/list.html"/>">
 					Partidas</a>

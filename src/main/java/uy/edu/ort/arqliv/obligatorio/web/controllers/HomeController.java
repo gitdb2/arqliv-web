@@ -34,6 +34,11 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
+		if(session.getAttribute("user")== null){
+			session.setAttribute("user", "dummy");
+		}
+		
+		
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("user", session.getAttribute("user"));
 		return "menu";
