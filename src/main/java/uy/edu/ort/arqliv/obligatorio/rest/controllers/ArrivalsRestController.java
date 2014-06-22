@@ -27,7 +27,7 @@ public class ArrivalsRestController {
 
 	@Autowired
 	ArrivalService arrivalService;
-
+	
 
 	/**
 	 * Crea un arrival en el sistema indicandole el id del barco y 
@@ -45,9 +45,9 @@ public class ArrivalsRestController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public Long create(
 			@RequestParam(value="user", required=true) String user,
-			@RequestBody Arrival arrival, 
 			@RequestParam(value="shipId", required=true) Long shipId, 
-			@RequestBody List<Long> containers) throws CustomServiceException {
+			@RequestParam(value="containers") List<Long> containers,
+			@RequestBody Arrival arrival) throws CustomServiceException {
 		logger.info("Create : "+ user + "  " + arrival.toString() + " "+containers);
 		
 		return arrivalService.store(user, arrival, shipId, containers);
@@ -72,9 +72,9 @@ public class ArrivalsRestController {
  * se deber enviar haya cambiado o no (con los que ya tenia)
  * En caso de error se tira excepcion
  * @param user
- * @param arrival
  * @param shipId
  * @param containers
+ * @param arrival
  * @return
  * @throws CustomServiceException
  */
@@ -83,9 +83,9 @@ public class ArrivalsRestController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public Long update(
 			@RequestParam(value="user", required=true) String user, 
-			@RequestBody Arrival arrival,
 			@RequestParam(value="shipId") Long shipId, 
-			@RequestBody List<Long> containers
+			@RequestParam(value="containers") List<Long> containers,
+			@RequestBody Arrival arrival
 			) throws CustomServiceException {
 		
 		logger.info("update : "+ user + "  " + arrival.toString() + " "+containers);

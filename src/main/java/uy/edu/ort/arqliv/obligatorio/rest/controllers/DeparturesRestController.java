@@ -29,25 +29,27 @@ public class DeparturesRestController {
 	DepartureService departureService;
 
 
-	/**
-	 * Crea un departure en el sistema indicandole el id del barco y 
+/**
+ *  * Crea un departure en el sistema indicandole el id del barco y 
 	 * la lista de ids de contenedores.
 	 * En caso de error se tira excepcion
-	 * @param user
-	 * @param shipId
-	 * @param departure
-	 * @param containers
-	 * @return
-	 * @throws CustomServiceException
-	 */
+ * @param user
+ * @param shipId
+ * @param containers
+ * @param departure
+ * @return
+ * @throws CustomServiceException
+ */
 	@RequestMapping(value = "/create", method = RequestMethod.POST,  headers = "Accept=application/json")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 	public Long create(
-			@RequestParam(value="user", required=true) String user,
-			@RequestBody Departure departure, 
-			@RequestParam(value="shipId", required=true) Long shipId, 
-			@RequestBody List<Long> containers) throws CustomServiceException {
+		@RequestParam(value="user", required=true) String user,
+		@RequestParam(value="shipId", required=true) Long shipId, 
+		@RequestParam(value="containers") List<Long> containers,
+		@RequestBody Departure departure) throws CustomServiceException {
+		
+		
 		logger.info("Create : "+ user + "  " + departure.toString() + " "+containers);
 		
 		return departureService.store(user, departure, shipId, containers);
@@ -72,9 +74,9 @@ public class DeparturesRestController {
 	 * se deber enviar haya cambiado o no (con los que ya tenia)
 	 * En caso de error se tira excepcion
  * @param user
- * @param departure
  * @param shipId
  * @param containers
+ * @param departure
  * @return
  * @throws CustomServiceException
  */
@@ -82,11 +84,10 @@ public class DeparturesRestController {
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 	public Long update(
-			@RequestParam(value="user", required=true) String user, 
-			@RequestBody Departure departure,
-			@RequestParam(value="shipId") Long shipId, 
-			@RequestBody List<Long> containers
-			) throws CustomServiceException {
+			@RequestParam(value="user", required=true) String user,
+			@RequestParam(value="shipId", required=true) Long shipId, 
+			@RequestParam(value="containers") List<Long> containers,
+			@RequestBody Departure departure) throws CustomServiceException {
 		
 		logger.info("update : "+ user + "  " + departure.toString() + " "+containers);
 		return departureService.update(user,
