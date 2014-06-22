@@ -84,72 +84,35 @@ public class ContainerController {
 		return "redirect:/containers/list.html";
 	}
 	
-	/*
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String setupEdit(Locale locale, Model model, @RequestParam("id") int id) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		Ship ship = null;
+		Container container = null;
 		boolean serviceError = false;
 		try {
-			ship = containerservice.find("rodrigo", id);
+			container = containerService.find("rodrigo", id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 			serviceError = true;
 		}
-		if (ship == null || serviceError) {
+		if (container == null || serviceError) {
 			return "redirect:/containers/list.html";
 		}
-		ShipEditWrapper shipEditWrapper = new ShipEditWrapper();
-		shipEditWrapper.setShip(ship);
-		shipEditWrapper.setArrivalDate(sdf.format(new Date()));
-		model.addAttribute("shipEditWrapper", shipEditWrapper);
+		model.addAttribute("container", container);
 		return "containers/edit";
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String submitEdit(@Valid ShipEditWrapper shipEditWrapper, BindingResult result) {
+	public String submitEdit(@Valid Container container, BindingResult result) {
 		if(result.hasErrors()) {
             return "containers/edit";
         }
 		try {
-			Date arrivalDate = sdf.parse(shipEditWrapper.getArrivalDate());
-			containerservice.update("rodrigo", shipEditWrapper.getShip(), arrivalDate);
+			containerService.update("rodrigo", container);
 		} catch (CustomServiceException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return "redirect:/containers/list.html";
 	}
-	
-	public static class ShipEditWrapper {
-		
-		private Ship ship;
-		
-		@NotNull
-		@NotEmpty
-		private String arrivalDate;
-		
-		public ShipEditWrapper() {
-			super();
-		}
-
-		public Ship getShip() {
-			return ship;
-		}
-		
-		public void setShip(Ship ship) {
-			this.ship = ship;
-		}
-		
-		public String getArrivalDate() {
-			return arrivalDate;
-		}
-
-		public void setArrivalDate(String arrivalDate) {
-			this.arrivalDate = arrivalDate;
-		}
-	}
-	*/
 	
 }
