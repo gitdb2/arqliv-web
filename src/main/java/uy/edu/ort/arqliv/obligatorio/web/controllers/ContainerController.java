@@ -1,16 +1,11 @@
 package uy.edu.ort.arqliv.obligatorio.web.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import uy.edu.ort.arqliv.obligatorio.common.ShipService;
+import uy.edu.ort.arqliv.obligatorio.common.ContainerService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
-import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
+import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 
 /**
  * Controller para atender las paginas que esten relacionadas con los barcos
@@ -31,132 +26,93 @@ import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
  *
  */
 @Controller
-@RequestMapping(value = "/ships")
-public class ShipController {
+@RequestMapping(value = "/containers")
+public class ContainerController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ShipController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ContainerController.class);
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	
 	@Autowired
-	private ShipService shipService;
+	private ContainerService containerService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		List<Ship> ships = new ArrayList<>();
+		List<Container> containers = new ArrayList<>();
 		try {
-			ships = shipService.list("rodrigo");
+			containers = containerService.list("rodrigo");
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("ships", ships );
-		
-		return "ships/list";
+		model.addAttribute("containers", containers);
+		return "containers/list";
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String setupCreate(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		model.addAttribute("ship", new Ship());
-		return "ships/create";
+		model.addAttribute("container", new Container());
+		return "containers/create";
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String submitCreate(@Valid Ship newShip, BindingResult result) {
+	public String submitCreate(@Valid Container container, BindingResult result) {
 		if(result.hasErrors()) {
-            return "ships/create";
+            return "containers/create";
         }
 		try {
-			shipService.store("rodrigo", newShip);
+			containerService.store("rodrigo", container);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/ships/list.html";
+		return "redirect:/containers/list.html";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String setupDelete(Locale locale, Model model, @RequestParam("id") int id) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		model.addAttribute("shipId", id);
-		return "ships/delete";
+		model.addAttribute("contId", id);
+		return "containers/delete";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String submitDelete(@Valid int id) {
 		try {
-			shipService.delete("rodrigo", id);
+			containerService.delete("rodrigo", id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/ships/list.html";
+		return "redirect:/containers/list.html";
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String setupEdit(Locale locale, Model model, @RequestParam("id") int id) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		Ship ship = null;
+		Container container = null;
 		boolean serviceError = false;
 		try {
-			ship = shipService.find("rodrigo", id);
+			container = containerService.find("rodrigo", id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 			serviceError = true;
 		}
-		if (ship == null || serviceError) {
-			return "redirect:/ships/list.html";
+		if (container == null || serviceError) {
+			return "redirect:/containers/list.html";
 		}
-		ShipEditWrapper shipEditWrapper = new ShipEditWrapper();
-		shipEditWrapper.setShip(ship);
-		shipEditWrapper.setArrivalDate(sdf.format(new Date()));
-		model.addAttribute("shipEditWrapper", shipEditWrapper);
-		return "ships/edit";
+		model.addAttribute("container", container);
+		return "containers/edit";
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String submitEdit(@Valid ShipEditWrapper shipEditWrapper, BindingResult result) {
+	public String submitEdit(@Valid Container container, BindingResult result) {
 		if(result.hasErrors()) {
-            return "ships/edit";
+            return "containers/edit";
         }
 		try {
-			Date arrivalDate = sdf.parse(shipEditWrapper.getArrivalDate());
-			shipService.update("rodrigo", shipEditWrapper.getShip(), arrivalDate);
+			containerService.update("rodrigo", container);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
 		}
-		return "redirect:/ships/list.html";
-	}
-	
-	public static class ShipEditWrapper {
-		
-		private Ship ship;
-		
-		@NotNull
-		@NotEmpty
-		private String arrivalDate;
-		
-		public ShipEditWrapper() {
-			super();
-		}
-
-		public Ship getShip() {
-			return ship;
-		}
-		
-		public void setShip(Ship ship) {
-			this.ship = ship;
-		}
-		
-		public String getArrivalDate() {
-			return arrivalDate;
-		}
-
-		public void setArrivalDate(String arrivalDate) {
-			this.arrivalDate = arrivalDate;
-		}
-
+		return "redirect:/containers/list.html";
 	}
 	
 }
