@@ -2,7 +2,7 @@
  
 <html> 
 <head> 
-	<title>Eliminar Barco</title> 
+	<title>Eliminar Contenedor</title> 
 	<style>
     	.error { color: red; font-size: 0.9em; font-weight: bold; }
 	</style> 
@@ -10,11 +10,11 @@
  
 <body> 
 
-	<h1>Eliminar Barco</h1>
+	<h1>Eliminar Contenedor</h1>
 	
 	<form:form method="post" modelAttribute="id">
-		<h3>Seguro quiere eliminar el Barco de id ${shipId}? </h3>
-		<input type="submit" value="Eliminar Barco" />
+		<h3>Seguro quiere eliminar el Contenedor de id ${contId}? </h3>
+		<input type="submit" value="Eliminar Contenedor" />
 	</form:form>
 
 </body> 

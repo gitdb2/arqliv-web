@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import uy.edu.ort.arqliv.obligatorio.common.ContainerService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
@@ -66,24 +67,24 @@ public class ContainerController {
 		return "redirect:/containers/list.html";
 	}
 	
-	/*
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String setupDelete(Locale locale, Model model, @RequestParam("id") int id) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		model.addAttribute("shipId", id);
+		model.addAttribute("contId", id);
 		return "containers/delete";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String submitDelete(@Valid int id) {
 		try {
-			containerservice.delete("rodrigo", id);
+			containerService.delete("rodrigo", id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
 		return "redirect:/containers/list.html";
 	}
 	
+	/*
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String setupEdit(Locale locale, Model model, @RequestParam("id") int id) {
 		logger.info("Welcome home! The client locale is {}.", locale);
