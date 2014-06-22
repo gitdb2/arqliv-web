@@ -30,9 +30,9 @@
 	                <td>${ship.manufactoringYear}</td>
 	                <td>${ship.name}</td>
 	                <td style="display:inline-block">
-	                	<a href="editShip.html?id=${ship.id}">Modificar</a> 
+	                	<a href="edit.html?id=${ship.id}">Modificar</a> 
 	                	| 
-	                	<a href="deleteShip.html?id=${ship.id}">Eliminar</a>
+	                	<a href="delete.html?id=${ship.id}">Eliminar</a>
                     </td>
 	            </tr>
 	        </c:forEach>

@@ -9,6 +9,9 @@
 </head> 
  
 <body> 
+	
+	<h1>Alta de Barco</h1>
+	
 	<form:form method="post" modelAttribute="ship">
 	
 		<label for="nameInput">Nombre: </label>
