@@ -38,6 +38,9 @@
 	<c:if test="${empty containers}">
 		<p>No hay Contenedores en el sistema</p>
 	</c:if>
+
+	<br />	
+	<a href="${pageContext.servletContext.contextPath}/containers/getPdfList.html">Exportar a PDF</a>
 	
 	<script	src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
@@ -45,3 +48,4 @@
 	<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+
