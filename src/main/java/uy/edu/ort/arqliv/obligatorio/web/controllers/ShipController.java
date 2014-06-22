@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import uy.edu.ort.arqliv.obligatorio.common.ShipService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
@@ -30,13 +34,9 @@ public class ShipController {
 	@Autowired
 	private ShipService shipService;
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
 		List<Ship> ships = new ArrayList<>();
 		try {
 			ships = shipService.list("rodrigo");
@@ -46,6 +46,43 @@ public class ShipController {
 		model.addAttribute("ships", ships );
 		
 		return "ships/list";
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String setupCreate(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		model.addAttribute("ship", new Ship());
+		return "ships/create";
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String submitCreate(@Valid Ship newShip, BindingResult result) {
+		if(result.hasErrors()) {
+            return "ships/create";
+        }
+		try {
+			shipService.store("rodrigo", newShip);
+		} catch (CustomServiceException e) {
+			e.printStackTrace();
+		}
+		return "redirect:/ships/list.html";
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String setupDelete(Locale locale, Model model, @RequestParam("id") int id) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		model.addAttribute("shipId", id);
+		return "ships/delete";
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String submitDelete(@Valid int id) {
+		try {
+			shipService.delete("rodrigo", id);
+		} catch (CustomServiceException e) {
+			e.printStackTrace();
+		}
+		return "redirect:/ships/list.html";
 	}
 	
 }
