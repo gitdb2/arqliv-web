@@ -40,7 +40,7 @@ public class DeparturesRestController {
 	 * @return
 	 * @throws CustomServiceException
 	 */
-	@RequestMapping(value = "/create", method = RequestMethod.PUT,  headers = "Accept=application/json")
+	@RequestMapping(value = "/create", method = RequestMethod.POST,  headers = "Accept=application/json")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 	public Long create(
