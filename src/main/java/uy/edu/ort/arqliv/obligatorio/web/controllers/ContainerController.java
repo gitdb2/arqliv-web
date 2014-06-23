@@ -1,9 +1,12 @@
 package uy.edu.ort.arqliv.obligatorio.web.controllers;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -40,8 +43,7 @@ public class ContainerController {
 	private ContainerService containerService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String list( Model model) {
 		List<Container> containers = new ArrayList<>();
 		try {
 			containers = containerService.list("rodrigo");
@@ -53,8 +55,7 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String setupCreate(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String setupCreate( Model model) {
 		model.addAttribute("container", new Container());
 		return "containers/create";
 	}
@@ -73,8 +74,7 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String setupDelete(Locale locale, Model model, @RequestParam("id") int id) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String setupDelete( Model model, @RequestParam("id") int id) {
 		model.addAttribute("contId", id);
 		return "containers/delete";
 	}
@@ -90,8 +90,7 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String setupEdit(Locale locale, Model model, @RequestParam("id") int id) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String setupEdit( Model model, @RequestParam("id") int id) {
 		Container container = null;
 		boolean serviceError = false;
 		try {
@@ -121,7 +120,7 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/getPdfList", method =  { RequestMethod.GET, RequestMethod.POST} )
-	public ResponseEntity<byte[]> postPDF(Locale locale, Model model) {
+	public ResponseEntity<byte[]> postPDF( Model model) {
 		List<Container> containers = new ArrayList<>();
 		try {
 			containers = containerService.list("rodrigo");
@@ -165,5 +164,13 @@ public class ContainerController {
 		}
 		return lines;
 	}
-	
+
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/menu", method = RequestMethod.GET)
+	public String containerHome(Model model, HttpSession session) {
+		model.addAttribute("user", session.getAttribute("user"));
+		return "containers/menu";
+	}
 }

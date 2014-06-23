@@ -5,12 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uy.edu.ort.arqliv.obligatorio.common.ShipService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
+import uy.edu.ort.arqliv.obligatorio.web.controllers.models.ShipEditWrapper;
 import uy.edu.ort.arqliv.obligatorio.web.pdf.PDFRenderer;
 
 /**
@@ -47,8 +46,7 @@ public class ShipController {
 	private ShipService shipService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String list( Model model) {
 		List<Ship> ships = new ArrayList<>();
 		try {
 			ships = shipService.list("rodrigo");
@@ -61,8 +59,7 @@ public class ShipController {
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String setupCreate(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String setupCreate( Model model) {
 		model.addAttribute("ship", new Ship());
 		return "ships/create";
 	}
@@ -81,8 +78,7 @@ public class ShipController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String setupDelete(Locale locale, Model model, @RequestParam("id") int id) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String setupDelete( Model model, @RequestParam("id") int id) {
 		model.addAttribute("shipId", id);
 		return "ships/delete";
 	}
@@ -98,8 +94,7 @@ public class ShipController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String setupEdit(Locale locale, Model model, @RequestParam("id") int id) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String setupEdit( Model model, @RequestParam("id") int id) {
 		Ship ship = null;
 		boolean serviceError = false;
 		try {
@@ -134,38 +129,20 @@ public class ShipController {
 		return "redirect:/ships/list.html";
 	}
 	
-	public static class ShipEditWrapper {
-		
-		private Ship ship;
-		
-		@NotNull
-		@NotEmpty
-		private String arrivalDate;
-		
-		public ShipEditWrapper() {
-			super();
-		}
 
-		public Ship getShip() {
-			return ship;
-		}
-		
-		public void setShip(Ship ship) {
-			this.ship = ship;
-		}
-		
-		public String getArrivalDate() {
-			return arrivalDate;
-		}
-
-		public void setArrivalDate(String arrivalDate) {
-			this.arrivalDate = arrivalDate;
-		}
-
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/menu", method = RequestMethod.GET)
+	public String containerHome( Model model, HttpSession session) {
+		model.addAttribute("user", session.getAttribute("user"));
+		return "ships/menu";
 	}
 	
+
+	
 	@RequestMapping(value = "/getPdfList", method =  { RequestMethod.GET, RequestMethod.POST} )
-	public ResponseEntity<byte[]> postPDF(Locale locale, Model model) {
+	public ResponseEntity<byte[]> postPDF( Model model) {
 		List<Ship> ships = new ArrayList<>();
 		try {
 			ships = shipService.list("rodrigo");
