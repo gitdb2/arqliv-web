@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
@@ -117,52 +116,64 @@ public class ProfilingController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/getPdfAvg", method =  { RequestMethod.GET, RequestMethod.POST} )
-	public ResponseEntity<byte[]> postPDFAvg(Locale locale, Model model) {
+	@RequestMapping(value = "/getPdfAvg", method =  { RequestMethod.GET, RequestMethod.POST } )
+	public ResponseEntity<byte[]> postPDFAvg(Model model, HttpSession session, @RequestParam(value="date", required=false) String dateString) {
 		List<Pair<String, Double>> averages = new ArrayList<Pair<String, Double>>();
-		try {
-			averages = profilingService.avgServiceTime("rodrigo", new Date());
-		} catch (CustomServiceException e) {
-			e.printStackTrace();
+		Date forDate = tryParseDate(dateString);
+		if (forDate != null) {
+			try {
+				averages = profilingService.avgServiceTime("rodrigo", forDate);
+			} catch (CustomServiceException e) {
+				e.printStackTrace();
+			}
+			String filename = "avg_"+ System.currentTimeMillis();
+			String fileExtension = ".pdf";
+			PDFRenderer renderer = new PDFRenderer(filename, "Tiempo promedio de servicios", getPdfTitlesAvg(), getPdfLinesAvg(averages), "");
+			byte[] contents = renderer.render();
+		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
+		    return response;	
 		}
-		String filename = "avg_"+ System.currentTimeMillis();
-		String fileExtension = ".pdf";
-		PDFRenderer renderer = new PDFRenderer(filename, "Tiempo promedio de servicios", getPdfTitlesAvg(), getPdfLinesAvg(averages), "");
-		byte[] contents = renderer.render();
-	    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
-	    return response;
+		return null;
 	}
 	
 	@RequestMapping(value = "/getPdfMin", method =  { RequestMethod.GET, RequestMethod.POST} )
-	public ResponseEntity<byte[]> postPDFMin(Locale locale, Model model) {
+	public ResponseEntity<byte[]> postPDFMin(Model model, HttpSession session, @RequestParam(value="date", required=false) String dateString) {
 		List<Pair<String, Long>> mins = new ArrayList<Pair<String, Long>>();
-		try {
-			mins = profilingService.minServiceTime("rodrigo", new Date());
-		} catch (CustomServiceException e) {
-			e.printStackTrace();
+		Date forDate = tryParseDate(dateString);
+		if (forDate != null) {
+			try {
+				mins = profilingService.minServiceTime("rodrigo", new Date());
+			} catch (CustomServiceException e) {
+				e.printStackTrace();
+			}
+			String filename = "min_"+ System.currentTimeMillis();
+			String fileExtension = ".pdf";
+			PDFRenderer renderer = new PDFRenderer(filename, "Mínimo tiempo de servicios", getPdfTitlesMin(), getPdfLinesMinMax(mins), "");
+			byte[] contents = renderer.render();
+		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
+		    return response;
 		}
-		String filename = "min_"+ System.currentTimeMillis();
-		String fileExtension = ".pdf";
-		PDFRenderer renderer = new PDFRenderer(filename, "Mínimo tiempo de servicios", getPdfTitlesMin(), getPdfLinesMinMax(mins), "");
-		byte[] contents = renderer.render();
-	    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
-	    return response;
+	    return null;
 	}
 	
 	@RequestMapping(value = "/getPdfMax", method =  { RequestMethod.GET, RequestMethod.POST} )
-	public ResponseEntity<byte[]> postPDFMax(Locale locale, Model model) {
+	public ResponseEntity<byte[]> postPDFMax(Model model, HttpSession session, @RequestParam(value="date", required=false) String dateString) {
 		List<Pair<String, Long>> maxs = new ArrayList<Pair<String, Long>>();
-		try {
-			maxs = profilingService.maxServiceTime("rodrigo", new Date());
-		} catch (CustomServiceException e) {
-			e.printStackTrace();
+		Date forDate = tryParseDate(dateString);
+		if (forDate != null) {
+			try {
+				maxs = profilingService.maxServiceTime("rodrigo", new Date());
+			} catch (CustomServiceException e) {
+				e.printStackTrace();
+			}
+			String filename = "max_"+ System.currentTimeMillis();
+			String fileExtension = ".pdf";
+			PDFRenderer renderer = new PDFRenderer(filename, "Máximo tiempo de servicios", getPdfTitlesMax(), getPdfLinesMinMax(maxs), "");
+			byte[] contents = renderer.render();
+		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
+		    return response;
 		}
-		String filename = "max_"+ System.currentTimeMillis();
-		String fileExtension = ".pdf";
-		PDFRenderer renderer = new PDFRenderer(filename, "Máximo tiempo de servicios", getPdfTitlesMax(), getPdfLinesMinMax(maxs), "");
-		byte[] contents = renderer.render();
-	    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
-	    return response;
+		return null;
 	}
 
 	private ResponseEntity<byte[]> createResponse(String filename, String fileExtension, byte[] contents) {

@@ -42,7 +42,7 @@
 		        </c:forEach>
 		    </table>
 		    
-			<a href="<c:url value="/profiling/getPdfMax.html"/>">Exportar listado a PDF</a>
+			<a href="<c:url value="/profiling/getPdfMax.html"/>?date=${profilingWrapper.date}">Exportar listado a PDF</a>
 		    
 		</c:if>
 		

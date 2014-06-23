@@ -41,8 +41,8 @@
 		            </tr>
 		        </c:forEach>
 		    </table>
-		    
-			<a href="<c:url value="/profiling/getPdfAvg.html"/>">Exportar listado a PDF</a>
+
+			<a href="<c:url value="/profiling/getPdfAvg.html"/>?date=${profilingWrapper.date}">Exportar listado a PDF</a>
 		    
 		</c:if>
 		
