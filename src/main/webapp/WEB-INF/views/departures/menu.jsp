@@ -6,7 +6,7 @@
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-<title>Contenedores</title>
+<title>Partidas</title>
 </head>
 <body>
 	<h1>Hola ${user}</h1>
@@ -14,9 +14,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/departures/list.html"/>">
 					Listado</a>
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/create.html"/>">
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/departures/create.html"/>">
 					Alta</a>
 			</div>
 		</div>
