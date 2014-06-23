@@ -24,7 +24,7 @@
 					class="btn btn-primary btn-lg btn-block"
 					href="<c:url value="/arrivals/list.html"/>">Listar</a> <br /> <a
 					class="btn btn-default btn-lg btn-block"
-					href="<c:url value="/home/menu.html"/>">Atrás</a>
+					href="<c:url value="/home/menu.html"/>">Menu Principal</a>
 			</div>
 
 		</div>
