@@ -23,6 +23,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+				<br>
+			<br>
+			<br>
+				<a class="btn btn-primary" href="<c:url value="/arrivals/list.html"/>">Volver</a>
+				<br>
 				<h1>Eliminar Arribo</h1>
 				<form:form method="post" modelAttribute="id">
 					<form:errors class="error" />
@@ -32,13 +37,7 @@
 				</form:form>
 			</div>
 		</div>
-		<br>
-		<br>
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<a class="btn btn-primary" href="<c:url value="/arrivals/list.html"/>">Volver</a>
-			</div>
-		</div>
+		
 	</div>
 	
 	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>

@@ -14,6 +14,7 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<h1>Hola ${user}</h1>
+			
 				<a class="btn btn-primary btn-lg btn-block"
 					href="<c:url value="/arrivals/create.html"/>">Alta</a> <a
 					class="btn btn-primary btn-lg btn-block"

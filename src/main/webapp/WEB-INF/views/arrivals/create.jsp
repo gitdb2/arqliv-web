@@ -26,7 +26,13 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 ">
+			<div class="col-md-6 col-md-offset-3 ">
+				<br>
+			<br>
+			<br>
+				<a class="btn btn-default" href="<c:url value="/arrivals/menu.html"/>">Volver</a>
+				<br>
+			
 				<h1>Alta de Arribo</h1>
 
 				<form:form method="post" modelAttribute="arrivalModel">

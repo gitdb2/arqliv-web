@@ -18,6 +18,12 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 ">
+			<br>
+			<br>
+			<br>
+				<a class="btn btn-default" href="<c:url value="/arrivals/menu.html"/>">Volver</a>
+				<br>
+			
 				<h1>Listado de Arrivos</h1>
 				<c:if test="${not empty arrivals}">
 					<table class="table">
