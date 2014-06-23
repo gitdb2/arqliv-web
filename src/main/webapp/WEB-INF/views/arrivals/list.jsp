@@ -5,10 +5,8 @@
 <html>
 <head>
 <title>Listado de Arrivos</title>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 <style>
 .arrivalContainer li {
@@ -35,8 +33,7 @@
 						<c:forEach var="arrival" items="${arrivals}">
 							<tr>
 								<td>${arrival.id}</td>
-								<td><fmt:formatDate pattern="dd/MM/yyyy"
-										value="${arrival.arrivalDate}" /></td>
+								<td><fmt:formatDate pattern="dd/MM/yyyy" value="${arrival.arrivalDate}" /></td>
 								<td>${arrival.ship.id}</td>
 								<td>${arrival.shipOrigin}</td>
 								<td>
