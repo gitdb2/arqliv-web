@@ -21,14 +21,14 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 ">
+			<div class="col-lg-12 ">
 				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/arrivals/menu.html"/>">Menu
 					Arribos</a> <br>
 
 				<h1>Listado de Arrivos</h1>
 				<c:if test="${not empty arrivals}">
 					<div class="table-responsive">
-						<table class="table table-condensed">
+						<table class="table table-condensed table-hover table-striped">
 							<tr>
 								<th>Id</th>
 								<th>Fecha de arribo</th>
@@ -64,7 +64,7 @@
 									<td>${arrival.containersDescriptions}</td>
 									<td>${arrival.shipCapacityThatDay}</td>
 									<td>${arrival.shipTransportedWeightThatDay}</td>
-									<td style="display: inline-block"><a href="edit.html?id=${arrival.id}">Modificar</a> | <a
+									<td><a href="edit.html?id=${arrival.id}">Modificar</a> | <a
 										href="delete.html?id=${arrival.id}">Eliminar</a></td>
 								</tr>
 							</c:forEach>
