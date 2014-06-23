@@ -1,5 +1,6 @@
 package uy.edu.ort.arqliv.obligatorio.web.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -24,6 +25,7 @@ import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.web.controllers.models.ArrivalModel;
 import uy.edu.ort.arqliv.obligatorio.web.controllers.models.Error;
+
 /**
  * Controller para atender las paginas que esten relacionadas con los barcos
  * 
@@ -35,11 +37,13 @@ import uy.edu.ort.arqliv.obligatorio.web.controllers.models.Error;
 public class ArrivalController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ArrivalController.class);
-
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	
+	
 	@Autowired
 	private ArrivalService arrivalService;
 
-	@RequestMapping(value = "/menu", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/menu", method = { RequestMethod.GET, RequestMethod.POST })
 	public String menu(HttpSession session, Model model) {
 		model.addAttribute("user", session.getAttribute("user"));
 		return "arrivals/menu";
@@ -54,7 +58,7 @@ public class ArrivalController {
 		try {
 			arrivals = arrivalService.list(user);
 		} catch (CustomServiceException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		model.addAttribute("arrivals", arrivals);
 		return "arrivals/list";
@@ -73,8 +77,7 @@ public class ArrivalController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String submitCreate(@Valid ArrivalModel arrivalModel, BindingResult result, Model model,
-			HttpSession session) {
+	public String submitCreate(@Valid ArrivalModel arrivalModel, BindingResult result, Model model, HttpSession session) {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
 		model.addAttribute("user", user);
 
@@ -82,24 +85,18 @@ public class ArrivalController {
 			return "arrivals/create";
 		}
 		try {
-			Set<Long> containerSet 		= new HashSet<>(arrivalModel.getContainers());
-			
+			Set<Long> containerSet = new HashSet<>(arrivalModel.getContainers());
+
 			Arrival arrival = new Arrival();
 			arrival.setArrivalDate(arrivalModel.getArrivalDate());
-			arrival.setShipOrigin(arrivalModel.getShipOrigin());	
+			arrival.setShipOrigin(arrivalModel.getShipOrigin());
 			arrival.setContainersDescriptions(arrivalModel.getContainersDescriptions());
-			
-			
-			
-			Long id = arrivalService.store(
-							user, 
-							arrival, 
-							arrivalModel.getShipId(),
-							new ArrayList<>(containerSet));
-			
+
+			Long id = arrivalService.store(user, arrival, arrivalModel.getShipId(), new ArrayList<>(containerSet));
+
 			logger.info("Arrival id: " + id + " creado");
 		} catch (CustomServiceException e) {
-		//	e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			result.reject("error", e.getMessage());
 			return "arrivals/create";
 		}
@@ -123,58 +120,128 @@ public class ArrivalController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String submitDelete(		
-				@RequestParam(value="id", required=true) Integer id,
-				Model model,	
-				HttpSession session
-				
-				) {
+	public String submitDelete(@RequestParam(value = "id", required = true) Integer id, Model model, HttpSession session
+
+	) {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
 
 		try {
 			arrivalService.delete(user, id);
 		} catch (CustomServiceException e) {
-			
+			logger.error(e.getMessage(), e);
 			model.addAttribute("error", new Error(e.getMessage(), "arrivals"));
 			return "error";
 		}
 		return "redirect:/arrivals/list.html";
 	}
 
-	//
-	// @RequestMapping(value = "/edit", method = RequestMethod.GET)
-	// public String setupEdit(Locale locale, Model model, @RequestParam("id")
-	// int id) {
-	// logger.info("Welcome home! The client locale is {}.", locale);
-	// Container container = null;
-	// boolean serviceError = false;
-	// try {
-	// container = containerService.find("rodrigo", id);
-	// } catch (CustomServiceException e) {
-	// e.printStackTrace();
-	// serviceError = true;
-	// }
-	// if (container == null || serviceError) {
-	// return "redirect:/containers/list.html";
-	// }
-	// model.addAttribute("container", container);
-	// return "containers/edit";
-	// }
-	//
-	// @RequestMapping(value = "/edit", method = RequestMethod.POST)
-	// public String submitEdit(@Valid Container container, BindingResult
-	// result) {
-	// if(result.hasErrors()) {
-	// return "containers/edit";
-	// }
-	// try {
-	// containerService.update("rodrigo", container);
-	// } catch (CustomServiceException e) {
-	// e.printStackTrace();
-	// }
-	// return "redirect:/containers/list.html";
-	// }
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String setupEdit(@RequestParam(value = "id", required = true) Integer id, Model model, HttpSession session) {
 
-	
+		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
+		model.addAttribute("user", user);
+
+		ArrivalModel arrivalModel = new ArrivalModel();
+
+		try {
+			Arrival arrival = arrivalService.find(user, id);
+			
+			arrivalModel.setArrivalId(arrival.getId());
+			arrivalModel.setArrivalDate(arrival.getArrivalDate());
+
+			arrivalModel.setContainers(arrival.getContainersIdList());
+			arrivalModel.setContainersDescriptions(arrival.getContainersDescriptions());
+			arrivalModel.setShipId(arrival.getShip().getId());
+			arrivalModel.setShipOrigin(arrival.getShipOrigin());
+
+		} catch (CustomServiceException e) {
+			logger.error(e.getMessage(), e);
+			model.addAttribute("error", new Error(e.getMessage(), "arrivals"));
+			return "error";
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			model.addAttribute("error", new Error(e.getMessage(), "arrivals"));
+			return "error";
+		}
+
+		model.addAttribute("arrivalModel", arrivalModel);
+		return "arrivals/edit";
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String submitEdit(@Valid ArrivalModel arrivalModel, BindingResult result, Model model, HttpSession session) {
+		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
+		model.addAttribute("user", user);
+
+		
+		
+		if (result.hasErrors()) {
+			return "arrivals/edit";
+		}
+		try {
+			Set<Long> containerSet = new HashSet<>(arrivalModel.getContainers());
+
+			Arrival arrival = arrivalService.find(user, arrivalModel.getArrivalId());
+			
+			///CONTROL DE CAMBIOS 
+			boolean hayCambios = false;
+			
+			if (arrivalModel.getArrivalDate() != null) {
+				if (!sdf.format(arrival.getArrivalDate()).equals(sdf.format(arrival.getArrivalDate())) ){
+					arrival.setArrivalDate(arrivalModel.getArrivalDate());
+					hayCambios = true;
+				}
+			}
+			if (arrivalModel.getShipOrigin() != null
+					&& !arrivalModel.getShipOrigin().isEmpty()
+					&& !arrival.getShipOrigin().trim()
+							.equals(arrivalModel.getShipOrigin().trim())) {
+				arrival.setShipOrigin(arrivalModel.getShipOrigin());
+				hayCambios = true;
+			}
+			if (arrivalModel.getContainersDescriptions() != null
+					&& !arrivalModel.getContainersDescriptions().trim().isEmpty()
+					&& !arrival.getContainersDescriptions().trim()
+							.equals(arrivalModel.getContainersDescriptions().trim())) {
+				arrival.setContainersDescriptions(arrivalModel.getContainersDescriptions());
+				hayCambios = true;
+			}
+			Long shipid = 0L;
+			if (arrivalModel.getShipId() != null && arrival.getShip().getId() != (long) arrivalModel.getShipId()) {
+				hayCambios = true;
+				shipid = (long) arrivalModel.getShipId();
+			} else {
+				shipid = arrival.getShip().getId();
+			}
+			
+			//cambios en los contenedores??
+			List<Long> containers = arrival.getContainersIdList();
+			boolean changeCont =  !(containerSet.size() == containers.size()
+								  && containers.containsAll(containerSet));
+			
+			if(changeCont){
+				containers = new ArrayList<>(containerSet);
+			}			
+				
+			//FIN CONTROL DE CAMBIOS 
+		
+			if(hayCambios || changeCont){
+				Long id  = arrivalService.update(user, arrival, shipid, containers);
+				logger.info("Arribo Modificado correctamente, id: "+ id);
+			}else{
+				logger.info("No hay Cambios, id: "+ arrivalModel.getArrivalId());
+				result.reject("error", "No se realizaron cambios, no se permite la edición.");
+				return "arrivals/edit";
+			}
+			
+		} catch (CustomServiceException e) {
+			result.reject("error", e.getMessage());
+			return "arrivals/edit";
+		}catch (Exception e) {
+			result.reject("error", e.getMessage());
+			return "arrivals/edit";
+		}
+		return "redirect:/arrivals/list.html";
+	}
 
 }

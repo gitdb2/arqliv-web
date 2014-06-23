@@ -26,7 +26,7 @@
 				<br>
 			<br>
 			<br>
-				<a class="btn btn-primary" href="<c:url value="/arrivals/list.html"/>">Volver</a>
+				<a class="btn btn-primary" href="<c:url value="/arrivals/list.html"/>">Listado</a>
 				<br>
 				<h1>Eliminar Arribo</h1>
 				<form:form method="post" modelAttribute="id">
