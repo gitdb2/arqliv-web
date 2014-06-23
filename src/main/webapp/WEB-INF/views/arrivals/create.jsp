@@ -31,7 +31,6 @@
 
 				<form:form method="post" modelAttribute="arrivalModel">
 				<form:errors class="error"/>
-<%-- 					<form:errors path="error" class="error"></form:errors> --%>
 					<form:hidden path="arrivalId"/>
 					
 					<div>

@@ -23,7 +23,7 @@ import uy.edu.ort.arqliv.obligatorio.common.ArrivalService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.web.controllers.models.ArrivalModel;
-
+import uy.edu.ort.arqliv.obligatorio.web.controllers.models.Error;
 /**
  * Controller para atender las paginas que esten relacionadas con los barcos
  * 
@@ -39,7 +39,7 @@ public class ArrivalController {
 	@Autowired
 	private ArrivalService arrivalService;
 
-	@RequestMapping(value = "/menu", method = RequestMethod.GET)
+	@RequestMapping(value = "/menu", method = {RequestMethod.GET, RequestMethod.POST})
 	public String menu(HttpSession session, Model model) {
 		model.addAttribute("user", session.getAttribute("user"));
 		return "arrivals/menu";
@@ -123,15 +123,20 @@ public class ArrivalController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String submitDelete(@Valid int id, HttpSession session, Model model, BindingResult result) {
+	public String submitDelete(		
+				@RequestParam(value="id", required=true) Integer id,
+				Model model,	
+				HttpSession session
+				
+				) {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
 
 		try {
 			arrivalService.delete(user, id);
 		} catch (CustomServiceException e) {
-			model.addAttribute("error", e.getMessage());
-			result.reject("error", e.getMessage());
-			return "arrivals/delete";
+			
+			model.addAttribute("error", new Error(e.getMessage(), "arrivals"));
+			return "error";
 		}
 		return "redirect:/arrivals/list.html";
 	}
