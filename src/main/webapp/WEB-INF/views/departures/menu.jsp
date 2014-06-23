@@ -6,23 +6,35 @@
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-<title>Partidas</title>
+<title>Menu Partidas</title>
 </head>
 <body>
-	<h1>Hola ${user}</h1>
 	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/departures/list.html"/>">
-					Listado</a>
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/departures/create.html"/>">
-					Alta</a>
+				<h1>Hola ${user}</h1>
+				<h2>Partidas</h2>
+			
+				<a class="btn btn-primary btn-lg btn-block"
+					href="<c:url value="/departures/create.html"/>">Alta</a> <a
+					class="btn btn-primary btn-lg btn-block"
+					href="<c:url value="/departures/list.html"/>">Baja</a> <a
+					class="btn btn-primary btn-lg btn-block"
+					href="<c:url value="/departures/list.html"/>">Modificar</a> <a
+					class="btn btn-primary btn-lg btn-block"
+					href="<c:url value="/departures/list.html"/>">Listar</a> <br /> <a
+					class="btn btn-default btn-lg btn-block"
+					href="<c:url value="/home/menu.html"/>">Menu Principal</a>
 			</div>
+
 		</div>
 	</div>
+	
+
 
 	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script
+		src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </body>
 </html>

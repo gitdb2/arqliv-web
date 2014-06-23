@@ -27,8 +27,7 @@ import uy.edu.ort.arqliv.obligatorio.web.controllers.models.ArrivalModel;
 import uy.edu.ort.arqliv.obligatorio.web.controllers.models.Error;
 
 /**
- * Controller para atender las paginas que esten relacionadas con los barcos
- * 
+ * Controller para atender las paginas que esten relacionadas con los arribos
  * @author rodrigo
  * 
  */
@@ -43,12 +42,24 @@ public class ArrivalController {
 	@Autowired
 	private ArrivalService arrivalService;
 
+	/**
+	 * Menu principal
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/menu", method = { RequestMethod.GET, RequestMethod.POST })
 	public String menu(HttpSession session, Model model) {
 		model.addAttribute("user", session.getAttribute("user"));
 		return "arrivals/menu";
 	}
 
+	/**
+	 * Listade de todas las entidades en la db
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model, HttpSession session) {
 		List<Arrival> arrivals = new ArrayList<>();
@@ -64,6 +75,12 @@ public class ArrivalController {
 		return "arrivals/list";
 	}
 
+	/**
+	 * Show form para crear una entidad, carga un modelo vacio
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String setupCreate(Model model, HttpSession session) {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
@@ -76,6 +93,14 @@ public class ArrivalController {
 		return "arrivals/create";
 	}
 
+	/**
+	 * Recibe el modelo con los datos para crear la entidad y persistirla.
+	 * @param arrivalModel
+	 * @param result
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String submitCreate(@Valid ArrivalModel arrivalModel, BindingResult result, Model model, HttpSession session) {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
@@ -119,6 +144,13 @@ public class ArrivalController {
 		return "arrivals/delete";
 	}
 
+	/**
+	 * On submit de confirmacion de borrado, elimina de la db
+	 * @param id
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String submitDelete(@RequestParam(value = "id", required = true) Integer id, Model model, HttpSession session
 
@@ -135,6 +167,13 @@ public class ArrivalController {
 		return "redirect:/arrivals/list.html";
 	}
 
+	/**
+	 * Show form para edicion, a partir del id se carga el modelo desde la DB para editarlo
+	 * @param id
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String setupEdit(@RequestParam(value = "id", required = true) Integer id, Model model, HttpSession session) {
 
@@ -168,6 +207,14 @@ public class ArrivalController {
 		return "arrivals/edit";
 	}
 
+		/**
+		 * Submit de edicion de entidad, controla que haya cambios y si los hay aplica los cambios en la db
+		 * @param arrivalModel
+		 * @param result
+		 * @param model
+		 * @param session
+		 * @return
+		 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String submitEdit(@Valid ArrivalModel arrivalModel, BindingResult result, Model model, HttpSession session) {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));

@@ -4,16 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Listado de Arribos</title>
+<title>Listado de Partidas</title>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 <style>
-.arrivalContainer {
+.departureContainer {
 	padding-left: 0px;
 }
 
-.arrivalContainer li {
+.departureContainer li {
 	display: inline;
 }
 </style>
@@ -22,11 +22,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 ">
-				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/arrivals/menu.html"/>">Menu
-					Arribos</a> <br>
+				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/departures/menu.html"/>">Menu
+					Partidas</a> <br>
 
 				<h1>Listado de Arrivos</h1>
-				<c:if test="${not empty arrivals}">
+				<c:if test="${not empty departures}">
 					<div class="table-responsive">
 						<table class="table table-condensed table-hover table-striped">
 							<tr>
@@ -36,21 +36,21 @@
 								<th>Pais de Origen</th>
 								<th>Ids contenedores</th>
 								<th>Desc. Contenedores</th>
-								<th>Capacidad Barco</th>
-								<th>Peso Transportado</th>
+								<!-- 								<th>Capacidad Barco</th> -->
+								<!-- 								<th>Peso Transportado</th> -->
 								<th>Acciones</th>
 							</tr>
-							<c:forEach var="arrival" items="${arrivals}">
+							<c:forEach var="departure" items="${departures}">
 								<tr>
-									<td>${arrival.id}</td>
-									<td><fmt:formatDate pattern="yyyyMMdd" value="${arrival.arrivalDate}" /></td>
-									<td>${arrival.ship.id}</td>
-									<td>${arrival.shipOrigin}</td>
+									<td>${departure.id}</td>
+									<td><fmt:formatDate pattern="yyyyMMdd" value="${departure.departureDate}" /></td>
+									<td>${departure.ship.id}</td>
+									<td>${departure.shipDestination}</td>
 									<td>
 										<ul style="padding-left: 0px;">
-											<c:forEach var="container" items="${arrival.containers}">
+											<c:forEach var="container" items="${departure.containers}">
 												<li>
-													<ul class="arrivalContainer">
+													<ul class="departureContainer">
 														<li>${container.id}<b>,</b></li>
 														<li>${container.code}<b>,</b></li>
 														<li>${container.brand}<b>,</b></li>
@@ -61,19 +61,18 @@
 											</c:forEach>
 										</ul>
 									</td>
-									<td>${arrival.containersDescriptions}</td>
-									<td>${arrival.shipCapacityThatDay}</td>
-									<td>${arrival.shipTransportedWeightThatDay}</td>
-									<td><a href="edit.html?id=${arrival.id}">Modificar</a> | <a
-										href="delete.html?id=${arrival.id}">Eliminar</a></td>
+									<td>${departure.containersDescriptions}</td>
+									<%-- 									<td>${departure.shipCapacityThatDay}</td> --%>
+									<%-- 									<td>${departure.shipTransportedWeightThatDay}</td> --%>
+									<td><a href="edit.html?id=${departure.id}">Modificar</a> | <a href="delete.html?id=${departure.id}">Eliminar</a></td>
 								</tr>
 							</c:forEach>
 						</table>
 					</div>
 				</c:if>
 
-				<c:if test="${empty arrivals}">
-					<p>No hay Arribos en el sistema</p>
+				<c:if test="${empty departures}">
+					<p>No hay Partidas en el sistema</p>
 				</c:if>
 			</div>
 		</div>

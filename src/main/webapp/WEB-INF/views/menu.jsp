@@ -9,10 +9,12 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>Hola ${user}</h1>
+
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+				<h1>Hola ${user}</h1><br>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/menu.html"/>">
 					Barcos</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/menu.html"/>">
