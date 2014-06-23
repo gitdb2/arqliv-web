@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import uy.edu.ort.arqliv.obligatorio.common.ReportsService;
+import uy.edu.ort.arqliv.obligatorio.common.ShipService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.dominio.Container;
+import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 import uy.edu.ort.arqliv.obligatorio.web.pdf.PDFRenderer;
 
 /**
@@ -42,6 +44,9 @@ public class ReportsController {
 
 	@Autowired
 	private ReportsService reportsService;
+	
+	@Autowired
+	private ShipService shipService;
 	
 	@RequestMapping(value = "/arrivalsbymonth", method = RequestMethod.GET)
 	public String arrivalsByMonth(Model model, HttpSession session, @RequestParam(value="month", required=false) Integer month) {
@@ -74,12 +79,73 @@ public class ReportsController {
 			}
 			String filename = "reports_arrival_by_month_"+ System.currentTimeMillis();
 			String fileExtension = ".pdf";
-			PDFRenderer renderer = new PDFRenderer(filename, "Tiempo promedio de servicios", getPdfTitles(), getPdfLines(arrivals), "");
+			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes", getPdfTitles(), getPdfLines(arrivals), "");
 			byte[] contents = renderer.render();
 		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
 		    return response;
 		}
 		return null;
+	}
+	
+	@RequestMapping(value = "/arrivalsbymonthbyship", method = RequestMethod.GET)
+	public String arrivalsByMonthByShip(Model model, HttpSession session, 
+			@RequestParam(value="month", required=false) Integer month,
+			@RequestParam(value="ship", required=false) Long ship) {
+		List<Arrival> arrivals = new ArrayList<Arrival>();
+		ReportsWrapper reportsWrapper = new ReportsWrapper();
+		if (month != null && ship != null) {
+			try {
+				arrivals = reportsService.arrivalsByMonthByShip("rodrigo", month, ship);
+				reportsWrapper.setMonth(month);
+				reportsWrapper.setShip(ship);
+			} catch (CustomServiceException e) {
+				logger.error("Error al consultar al servicio", e);
+			}
+		} else {
+			reportsWrapper.setMonth(1);
+		}
+		reportsWrapper.setArrivals(arrivals);
+		model.addAttribute("reportsWrapper", reportsWrapper);
+		model.addAttribute("months", getMonths());
+		model.addAttribute("ships", getShips());
+		return "reports/arrivalsbymonthbyship";
+	}
+	
+	@RequestMapping(value = "/getPdfArrivalsByMonthByShip", method =  { RequestMethod.GET, RequestMethod.POST } )
+	public ResponseEntity<byte[]> postPDFArrivalsByMonthByShip(Model model, HttpSession session, 
+			@RequestParam(value="month", required=false) Integer month, 
+			@RequestParam(value="ship", required=false) Long ship) {
+		List<Arrival> arrivals = new ArrayList<Arrival>();
+		if (month != null) {
+			try {
+				arrivals = reportsService.arrivalsByMonthByShip("rodrigo", month, ship);
+			} catch (CustomServiceException e) {
+				logger.error("Error al consultar al servicio", e);
+			}
+			String filename = "reports_arrival_by_month_by_ship_"+ System.currentTimeMillis();
+			String fileExtension = ".pdf";
+			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes por Barco", getPdfTitles(), getPdfLines(arrivals), "");
+			byte[] contents = renderer.render();
+		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
+		    return response;
+		}
+		return null;
+	}
+	
+	private Map<Long, String> getShips() {
+		List<Ship> ships = new ArrayList<Ship>();
+		Map<Long, String> result = new HashMap<Long, String>();
+		try {
+			ships = shipService.list("rodrigo");
+			if (ships != null) {
+				for (Ship s : ships) {
+					result.put(s.getId(), "Id: " + s.getId() + ", Nombre:" + s.getName());
+				}
+			}
+		} catch (CustomServiceException e) {
+			logger.error("Error al consultar al servicio", e);
+		}
+		return result;
 	}
 	
 	private ResponseEntity<byte[]> createResponse(String filename, String fileExtension, byte[] contents) {
@@ -152,7 +218,7 @@ public class ReportsController {
 		
 		private Integer month;
 		
-		private Integer ship;
+		private Long ship;
 		
 		private List<Arrival> arrivals;
 
@@ -164,11 +230,11 @@ public class ReportsController {
 			this.month = month;
 		}
 
-		public Integer getShip() {
+		public Long getShip() {
 			return ship;
 		}
 
-		public void setShip(Integer ship) {
+		public void setShip(Long ship) {
 			this.ship = ship;
 		}
 
