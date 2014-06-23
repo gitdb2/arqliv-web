@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,6 +20,8 @@ import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 public class ArrivalModel {
 
 	private Long arrivalId;
+	
+	@NotNull
 	@DateTimeFormat(pattern = "yyyyMMdd")
 	private Date arrivalDate;
 

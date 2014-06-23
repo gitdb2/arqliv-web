@@ -27,47 +27,60 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 ">
-				<br>
-			<br>
-			<br>
-				<a class="btn btn-default" href="<c:url value="/arrivals/menu.html"/>">Volver</a>
-				<br>
-			
+				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/arrivals/menu.html"/>">Volver</a> <br>
+
 				<h1>Alta de Arribo</h1>
 
-				<form:form method="post" modelAttribute="arrivalModel">
+				<form:form method="post" modelAttribute="arrivalModel" class="form-horizontal" role="form">
 					<form:errors class="error" />
 					<form:hidden path="arrivalId" />
 
-					<div>
-						<label for="arrivalDate">Fecha de Arribo: </label>
-						<form:input class="span2" size="8" path="arrivalDate" id="arrivalDate"></form:input>
-						<form:errors path="arrivalDate" class="error"></form:errors>
+
+					<div class="form-group">
+						<label class="col-lg-4 control-label" for="arrivalDate">Fecha de Arribo: </label>
+						<div class="col-lg-8">
+							<form:input class="form-control" path="arrivalDate" id="arrivalDate"></form:input>
+							<form:errors path="arrivalDate" class="error"></form:errors>
+						</div>
 					</div>
 
-					<br />
+					<div class="form-group">
+						<label class="col-lg-4 control-label" for="shipId">Id de barco: </label>
+						<div class="col-lg-8">
+							<form:input class="form-control" path="shipId" id="shipId"></form:input>
+							<form:errors path="shipId" class="error"></form:errors>
+						</div>
+					</div>
 
-					<label for="shipId">Id de barco: </label>
-					<form:input path="shipId" id="shipId"></form:input>
-					<form:errors path="shipId" class="error"></form:errors>
-					<br />
+					<div class="form-group">
+						<label class="col-lg-4 control-label" for="shipOrigin">Pais de Origen: </label>
+						<div class="col-lg-8">
+							<form:input class="form-control" path="shipOrigin" id="shipOrigin"></form:input>
+							<form:errors path="shipOrigin" class="error"></form:errors>
+						</div>
+					</div>
 
-					<label for="shipOrigin">Pais de Origen: </label>
-					<form:input path="shipOrigin" id="shipOrigin"></form:input>
-					<form:errors path="shipOrigin" class="error"></form:errors>
-					<br />
 
-					<label for="containersDescriptions">Desc. Contenedores: </label>
-					<form:input path="containersDescriptions" id="containersDescriptions"></form:input>
-					<form:errors path="containersDescriptions" class="error"></form:errors>
-					<br />
+					<div class="form-group">
+						<label class="col-lg-4 control-label" for="containersDescriptions">Desc. Contenedores: </label>
+						<div class="col-lg-8">
+							<form:input class="form-control" path="containersDescriptions" id="containersDescriptions"></form:input>
+							<form:errors path="containersDescriptions" class="error"></form:errors>
 
-					<label for="containers">Ids contenedores (separado por comas): </label>
-					<form:input path="containers" id="containers"></form:input>
-					<form:errors path="containers" class="error"></form:errors>
-					<br />
+						</div>
+					</div>
 
-					<button class="btn btn-primary" type="submit">Crear Arribo</button>
+
+					<div class="form-group">
+						<label class="col-lg-4 control-label" for="containers">Ids contenedores (separado por comas): </label>
+						<div class="col-lg-8">
+							<form:input class="form-control" path="containers" id="containers"></form:input>
+							<form:errors path="containers" class="error"></form:errors>
+						</div>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-primary  btn-lg btn-block" type="submit">Crear Arribo</button>
+					</div>
 				</form:form>
 			</div>
 		</div>
@@ -78,11 +91,11 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
 	<script>
-	$(function(){
-		$('#arrivalDate').datepicker({
-			format: 'yyyymmdd'
-		});	
-	});
+		$(function() {
+			$('#arrivalDate').datepicker({
+				format : 'yyyymmdd'
+			});
+		});
 	</script>
 
 </body>
