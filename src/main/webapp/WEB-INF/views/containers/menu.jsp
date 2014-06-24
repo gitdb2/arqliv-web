@@ -14,10 +14,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
-					Listado</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/create.html"/>">
 					Alta</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
+					Baja</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
+					Modificar</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
+					Listar</a>
 			</div>
 		</div>
 	</div>

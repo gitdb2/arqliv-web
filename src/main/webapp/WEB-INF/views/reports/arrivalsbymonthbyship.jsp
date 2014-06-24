@@ -43,6 +43,7 @@
 	                <th>Pais de Origen</th>
 	                <th>Contenedores</th>
 	                <th>Descripción de Contenedores</th>
+	                <th>Peso Transportado</th>
 		 	    </tr>
 		        <c:forEach var="arrival" items="${reportsWrapper.arrivals}">
 		            <tr>
@@ -52,6 +53,7 @@
 		                <td>${arrival.shipOrigin}</td>
 		                <td>${arrival.containers}</td>
 		                <td>${arrival.containersDescriptions}</td>
+		                <td>${arrival.shipTransportedWeightThatDay}</td>
 		            </tr>
 		        </c:forEach>
 		    </table>

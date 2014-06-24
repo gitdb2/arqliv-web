@@ -81,7 +81,7 @@ public class ReportsController {
 			}
 			String filename = "reports_arrival_by_month_"+ System.currentTimeMillis();
 			String fileExtension = ".pdf";
-			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes", getPdfTitlesArrival(), getPdfLinesArrival(arrivals), "");
+			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes", getPdfTitlesArrivalByMonth(), getPdfLinesArrivalByMonth(arrivals), "");
 			byte[] contents = renderer.render();
 		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
 		    return response;
@@ -126,7 +126,8 @@ public class ReportsController {
 			}
 			String filename = "reports_arrival_by_month_by_ship_"+ System.currentTimeMillis();
 			String fileExtension = ".pdf";
-			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes por Barco", getPdfTitlesArrival(), getPdfLinesArrival(arrivals), "");
+			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes por Barco", 
+					getPdfTitlesArrivalByMonthByShip(), getPdfLinesArrivalByMonthByShip(arrivals), "");
 			byte[] contents = renderer.render();
 		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
 		    return response;
@@ -191,7 +192,7 @@ public class ReportsController {
 			}
 			String filename = "reports_departures_by_month_"+ System.currentTimeMillis();
 			String fileExtension = ".pdf";
-			PDFRenderer renderer = new PDFRenderer(filename, "Partidas por mes", getPdfTitlesDeparture(), getPdfLinesDeparture(departures), "");
+			PDFRenderer renderer = new PDFRenderer(filename, "Partidas por mes", getPdfTitlesDeparturesByMonth(), getPdfLinesDeparturesByMonth(departures), "");
 			byte[] contents = renderer.render();
 		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
 		    return response;
@@ -212,7 +213,8 @@ public class ReportsController {
 			}
 			String filename = "reports_departures_by_month_by_ship_"+ System.currentTimeMillis();
 			String fileExtension = ".pdf";
-			PDFRenderer renderer = new PDFRenderer(filename, "Partidas por mes por Barco", getPdfTitlesDeparture(), getPdfLinesDeparture(departures), "");
+			PDFRenderer renderer = new PDFRenderer(filename, "Partidas por mes por Barco", 
+					getPdfTitlesDeparturesByMonthByShip(), getPdfLinesDeparturesByMonthByShip(departures), "");
 			byte[] contents = renderer.render();
 		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
 		    return response;
@@ -251,7 +253,19 @@ public class ReportsController {
 		return response;
 	}
 	
-	private String getPdfTitlesArrival() {
+	private String getPdfTitlesArrivalByMonthByShip() {
+		return String.format("%10s  " // ID
+				+ "%-15s  " // "Fecha de arribo",
+				+ "%15s  " // "Id de barco",
+				+ "%-15s  " // "Pais de Origen",
+				+ "%-20s  " // "Ids contenedores"
+				+ "%-20s " // "Desc. Contenedores"
+				+ "%-20s " // "Peso transportado"
+				, "Id", "Fecha de arribo", "Id de barco"
+				, "Pais de Origen",	"Ids contenedores", "Desc. Contenedores", "Peso Transportado");
+	}
+	
+	private String getPdfTitlesArrivalByMonth() {
 		return String.format("%10s  " // ID
 				+ "%-15s  " // "Fecha de arribo",
 				+ "%15s  " // "Id de barco",
@@ -262,7 +276,7 @@ public class ReportsController {
 				, "Pais de Origen",	"Ids contenedores", "Desc. Contenedores");
 	}
 	
-	private String getPdfTitlesDeparture() {
+	private String getPdfTitlesDeparturesByMonth() {
 		return String.format("%10s  " // ID
 				+ "%-15s  " // "Fecha de partida",
 				+ "%15s  " // "Id de barco",
@@ -273,7 +287,40 @@ public class ReportsController {
 				, "Pais de Destino", "Ids contenedores", "Desc. Contenedores");
 	}
 	
-	private List<String> getPdfLinesArrival(List<Arrival> arrivals) {
+	private String getPdfTitlesDeparturesByMonthByShip() {
+		return String.format("%10s  " // ID
+				+ "%-15s  " // "Fecha de partida",
+				+ "%15s  " // "Id de barco",
+				+ "%-15s  " // "Pais de Destino",
+				+ "%-20s  " // "Contenedores"
+				+ "%-20s " // "Descripcion de Contenedores"
+				+ "%-20s " // "Peso transportado"
+				, "Id", "Fecha de partida", "Id de barco"
+				, "Pais de Destino", "Ids contenedores", "Desc. Contenedores", "Peso Transportado");
+	}
+	
+	private List<String> getPdfLinesArrivalByMonthByShip(List<Arrival> arrivals) {
+		List<String> lines = new ArrayList<>();
+		for (Arrival arr : arrivals) {
+			lines.add(String.format("%10d  " // ID
+					+ "%-15s  " // "Fecha de arribo",
+					+ "%15d  " // "Id de barco",
+					+ "%-15s  " // "Pais de Origen",
+					+ "%-20s  " // "Ids contenedores"
+					+ "%-20s" // "Desc. Contenedores"
+					+ "%-20.2f" // "Peso Transportado"
+					, arr.getId()
+					, sdfOut.format(arr.getArrivalDate())
+					, arr.getShip().getId()
+					, arr.getShipOrigin()
+					, generateContainerList(arr.getContainers()).toString()
+					, arr.getContainersDescriptions()
+					, arr.getShipTransportedWeightThatDay()));
+		}
+		return lines;
+	}
+	
+	private List<String> getPdfLinesArrivalByMonth(List<Arrival> arrivals) {
 		List<String> lines = new ArrayList<>();
 		for (Arrival arr : arrivals) {
 			lines.add(String.format("%10d  " // ID
@@ -292,7 +339,7 @@ public class ReportsController {
 		return lines;
 	}
 	
-	private List<String> getPdfLinesDeparture(List<Departure> departures) {
+	private List<String> getPdfLinesDeparturesByMonth(List<Departure> departures) {
 		List<String> lines = new ArrayList<>();
 		for (Departure dep : departures) {
 			lines.add(String.format("%10d  " // ID
@@ -307,6 +354,27 @@ public class ReportsController {
 					, dep.getShipDestination()
 					, generateContainerList(dep.getContainers()).toString()
 					, dep.getContainersDescriptions()));
+		}
+		return lines;
+	}
+	
+	private List<String> getPdfLinesDeparturesByMonthByShip(List<Departure> departures) {
+		List<String> lines = new ArrayList<>();
+		for (Departure dep : departures) {
+			lines.add(String.format("%10d  " // ID
+					+ "%-15s  " // "Fecha de partida",
+					+ "%15d  " // "Id de barco",
+					+ "%-15s  " // "Destino del barco",
+					+ "%-20s  " // "Contenedores"
+					+ "%-20s" // "Descripcion de Contenedores"
+					+ "%-20.2f" // "Peso Transportado"
+					, dep.getId()
+					, sdfOut.format(dep.getDepartureDate())
+					, dep.getShip().getId()
+					, dep.getShipDestination()
+					, generateContainerList(dep.getContainers()).toString()
+					, dep.getContainersDescriptions()
+					, dep.getShipTransportedWeightThatDay()));
 		}
 		return lines;
 	}

@@ -14,10 +14,15 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
-					Listado</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/create.html"/>">
 					Alta</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
+					Baja</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
+					Modificar</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
+					Listar</a>
+				
 			</div>
 		</div>
 	</div>

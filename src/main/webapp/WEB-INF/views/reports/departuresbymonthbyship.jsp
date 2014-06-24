@@ -43,6 +43,7 @@
 	                <th>Destino del barco</th>
 	                <th>Contenedores</th>
 	                <th>Descripción de Contenedores</th>
+	                <th>Peso Transportado</th>
 		 	    </tr>
 		        <c:forEach var="departure" items="${reportsWrapper.departures}">
 		            <tr>
@@ -52,6 +53,7 @@
 		                <td>${departure.shipDestination}</td>
 		                <td>${departure.containers}</td>
 		                <td>${departure.containersDescriptions}</td>
+		                <td>${departure.shipTransportedWeightThatDay}</td>
 		            </tr>
 		        </c:forEach>
 		    </table>
