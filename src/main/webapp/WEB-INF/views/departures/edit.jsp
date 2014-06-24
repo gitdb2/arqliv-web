@@ -34,12 +34,20 @@
 					<form:errors class="error" />
 					<form:hidden path="departureId" />
 
-
 					<div class="form-group">
 						<label class="col-lg-4 control-label" for="departureDate">Fecha de Partida: </label>
 						<div class="col-lg-8">
 							<form:input class="form-control" path="departureDate" id="departureDate"></form:input>
 							<form:errors path="departureDate" class="error"></form:errors>
+						</div>
+					</div>
+					
+					<form:input path="arrival" id="arrival" value="${departureModel.arrival}" type="hidden"></form:input>
+					
+					<div class="form-group">
+						<label class="col-lg-4 control-label" for="departureDate">Id Arribo asociado:</label>
+						<div class="col-lg-8">
+							<c:out value="${departureModel.arrival}"></c:out>
 						</div>
 					</div>
 

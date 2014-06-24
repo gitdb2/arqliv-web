@@ -205,6 +205,7 @@ public class DepartureController {
 			departureModel.setContainersDescriptions(departure.getContainersDescriptions());
 			departureModel.setShipId(departure.getShip().getId());
 			departureModel.setShipDestination(departure.getShipDestination());
+			departureModel.setArrival(departure.getArrival().getId());
 
 		} catch (CustomServiceException e) {
 			logger.error(e.getMessage(), e);

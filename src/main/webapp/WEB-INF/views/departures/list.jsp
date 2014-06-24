@@ -25,15 +25,15 @@
 				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/departures/menu.html"/>">Menu
 					Partidas</a> <br>
 
-				<h1>Listado de Arrivos</h1>
+				<h1>Listado de Partidas</h1>
 				<c:if test="${not empty departures}">
 					<div class="table-responsive">
 						<table class="table table-condensed table-hover table-striped">
 							<tr>
 								<th>Id</th>
-								<th>Fecha de arribo</th>
+								<th>Fecha de partida</th>
 								<th>Id de barco</th>
-								<th>Pais de Origen</th>
+								<th>Pais de Destino</th>
 								<th>Ids contenedores</th>
 								<th>Desc. Contenedores</th>
 								<!-- 								<th>Capacidad Barco</th> -->

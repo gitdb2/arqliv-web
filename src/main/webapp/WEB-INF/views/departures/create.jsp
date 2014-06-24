@@ -44,7 +44,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="col-lg-4 control-label" for="arrivalInput">Arribo asociado a la Partida:</label>
+						<label class="col-lg-4 control-label" for="arrivalInput">Arribo asociado:</label>
 						<form:select path="arrival" id="arrival">
    							<form:options items="${departureModel.arrivals}"/>
 						</form:select>

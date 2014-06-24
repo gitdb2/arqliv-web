@@ -25,7 +25,7 @@
 				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/arrivals/menu.html"/>">Menu
 					Arribos</a> <br>
 
-				<h1>Listado de Arrivos</h1>
+				<h1>Listado de Arribos</h1>
 				<c:if test="${not empty arrivals}">
 					<div class="table-responsive">
 						<table class="table table-condensed table-hover table-striped">
