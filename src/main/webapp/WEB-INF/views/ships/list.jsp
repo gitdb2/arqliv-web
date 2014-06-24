@@ -9,7 +9,8 @@
 <body>
 	<h1>Listado de Barcos</h1>
 	<c:if test="${not empty ships}">
-	    <table border="1">
+		<div class="table-responsive">
+		<table class="table table-condensed table-hover table-striped">
 	   	    <tr>
 	 	    	    <th>Id</th>
 	                <th>Capacidad</th>
@@ -37,6 +38,7 @@
 	            </tr>
 	        </c:forEach>
 	    </table>
+	    </div>
 	</c:if>
 	
 	<c:if test="${empty ships}">

@@ -9,7 +9,8 @@
 <body>
 	<h1>Listado de Contenedores</h1>
 	<c:if test="${not empty containers}">
-	    <table border="1">
+		<div class="table-responsive">
+		<table class="table table-condensed table-hover table-striped">
 	   	    <tr>
 	 	    	    <th>Id</th>
 	                <th>Codigo</th>
@@ -33,6 +34,7 @@
 	            </tr>
 	        </c:forEach>
 	    </table>
+	    </div>
 	</c:if>
 	
 	<c:if test="${empty containers}">
