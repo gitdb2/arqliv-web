@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uy.edu.ort.arqliv.obligatorio.common.ReportsService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
+import uy.edu.ort.arqliv.obligatorio.dominio.Departure;
 
 @RestController
 @RequestMapping(value = "/reports")
@@ -40,13 +41,12 @@ public class ReportsRestController {
 	public List<Arrival> arrivalsByMonth(
 			@RequestParam(value="user", required=true) String user, 
 			@PathVariable(value="id") int month) throws CustomServiceException {
-		
 		logger.info(user + " , " + month);
 		return reportsService.arrivalsByMonth(user, month);
 	}
 	
 	/**
-	 * Lista los arrivals filtrando por me y por id barco
+	 * Lista los arrivals filtrando por mes y por id barco
 	 * @param month
 	 * @param shipId
 	 * @return
@@ -63,5 +63,39 @@ public class ReportsRestController {
 		return reportsService.arrivalsByMonthByShip(user, month, shipId);
 	}
 	
+	/***
+	 * Retorna los departures que para un mes (1 Enero)
+	 * @param user
+	 * @param month
+	 * @return
+	 * @throws CustomServiceException
+	 */
+	@RequestMapping(value = "/departuresByMonth/{id}", method = RequestMethod.GET,  headers = "Accept=application/json")
+	@ResponseBody
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<Departure> departuresByMonth(
+			@RequestParam(value="user", required=true) String user, 
+			@PathVariable(value="id") int month) throws CustomServiceException {
+		logger.info(user + " , " + month);
+		return reportsService.departuresByMonth(user, month);
+	}
+	
+	/**
+	 * Lista los departures filtrando por mes y por id barco
+	 * @param month
+	 * @param shipId
+	 * @return
+	 * @throws CustomServiceException
+	 */
+	@RequestMapping(value = "/departuresByMonthByShip/{id}/{shipId}", method = RequestMethod.GET,  headers = "Accept=application/json")
+	@ResponseBody
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<Departure> departuresByMonthByShip(
+			@RequestParam(value="user", required=true) String user, 
+			@PathVariable(value="id") Integer month, 
+			@PathVariable(value="shipId") Long shipId) throws CustomServiceException {
+		logger.info(user + " , " + month+ " , " + shipId);
+		return reportsService.departuresByMonthByShip(user, month, shipId);
+	}
 
 }
