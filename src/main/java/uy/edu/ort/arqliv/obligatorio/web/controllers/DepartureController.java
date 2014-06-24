@@ -128,7 +128,7 @@ public class DepartureController {
 			departure.setShipDestination(departureModel.getShipDestination());
 			departure.setContainersDescriptions(departureModel.getContainersDescriptions());
 
-			Long id = departureService.store(user, departure, departureModel.getShipId(), new ArrayList<>(containerSet));
+			Long id = departureService.store(user, departure, departureModel.getShipId(), new ArrayList<>(containerSet), departureModel.getArrival());
 
 			logger.info("Departure id: " + id + " creado");
 		} catch (CustomServiceException e) {
@@ -282,8 +282,8 @@ public class DepartureController {
 			// FIN CONTROL DE CAMBIOS
 
 			if (hayCambios || changeCont) {
-				Long id = departureService.update(user, departure, shipid, containers);
-				logger.info("PArtida Modificado correctamente, id: " + id);
+				Long id = departureService.update(user, departure, shipid, containers, departure.getArrival().getId());
+				logger.info("Partida Modificado correctamente, id: " + id);
 			} else {
 				logger.info("No hay Cambios, id: " + departureModel.getDepartureId());
 				result.reject("error", "No se realizaron cambios, no se permite la edición.");

@@ -35,6 +35,7 @@ public class DeparturesRestController {
 	 * En caso de error se tira excepcion
  * @param user
  * @param shipId
+ * @param arrivalId
  * @param containers
  * @param departure
  * @return
@@ -46,13 +47,14 @@ public class DeparturesRestController {
 	public Long create(
 		@RequestParam(value="user", required=true) String user,
 		@RequestParam(value="shipId", required=true) Long shipId, 
+		@RequestParam(value="arrivalId", required=true) Long arrivalId, 
 		@RequestParam(value="containers") List<Long> containers,
 		@RequestBody Departure departure) throws CustomServiceException {
 		
 		
 		logger.info("Create : "+ user + "  " + departure.toString() + " "+containers);
 		
-		return departureService.store(user, departure, shipId, containers);
+		return departureService.store(user, departure, shipId, containers, arrivalId);
 	}
 
 	
@@ -75,6 +77,7 @@ public class DeparturesRestController {
 	 * En caso de error se tira excepcion
  * @param user
  * @param shipId
+ * @param arrivalId
  * @param containers
  * @param departure
  * @return
@@ -86,12 +89,13 @@ public class DeparturesRestController {
 	public Long update(
 			@RequestParam(value="user", required=true) String user,
 			@RequestParam(value="shipId", required=true) Long shipId, 
+			@RequestParam(value="arrivalId", required=true) Long arrivalId, 
 			@RequestParam(value="containers") List<Long> containers,
 			@RequestBody Departure departure) throws CustomServiceException {
 		
-		logger.info("update : "+ user + "  " + departure.toString() + " "+containers);
+		logger.info("update : "+ user + "  " + departure.toString()+ " "+arrivalId + " "+containers  );
 		return departureService.update(user,
-				departure, shipId, containers);
+				departure, shipId, containers, arrivalId);
 	
 	}
 
