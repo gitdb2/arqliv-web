@@ -22,6 +22,9 @@
 					Partidas por mes</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/reports/departuresbymonthbyship.html"/>">
 					Partidas por mes por Barco</a>
+				<br /> <a
+					class="btn btn-default btn-lg btn-block"
+					href="<c:url value="/home/menu.html"/>">Menu Principal</a>
 			</div>
 		</div>
 	</div>

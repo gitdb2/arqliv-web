@@ -22,6 +22,9 @@
 					Modificar</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/containers/list.html"/>">
 					Listar</a>
+				<br /> <a
+					class="btn btn-default btn-lg btn-block"
+					href="<c:url value="/home/menu.html"/>">Menu Principal</a>
 			</div>
 		</div>
 	</div>
