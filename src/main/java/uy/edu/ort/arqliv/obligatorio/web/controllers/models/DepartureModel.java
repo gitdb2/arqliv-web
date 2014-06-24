@@ -3,6 +3,7 @@ package uy.edu.ort.arqliv.obligatorio.web.controllers.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
@@ -29,6 +30,10 @@ public class DepartureModel {
 
 	private String containersDescriptions;
 	private String shipDestination;
+	
+	private Map<Long, String> arrivals;
+	
+	private Long arrival;
 
 	public DepartureModel() {
 		super();
@@ -46,9 +51,7 @@ public class DepartureModel {
 				departure.getContainersDescriptions(), 
 				departure.getShipDestination()
 			);
-
 	}
-
 	
 	/**
 	 * 
@@ -61,7 +64,6 @@ public class DepartureModel {
 	 */
 	public DepartureModel(Long departureId, Date departureDate, Long shipId, List<Long> containers,
 			String containersDescriptions, String shipDestination) {
-
 		this.departureId = departureId;
 		this.departureDate = departureDate;
 		this.shipId = shipId;
@@ -118,5 +120,20 @@ public class DepartureModel {
 		this.shipDestination = shipDestination;
 	}
 
+	public Long getArrival() {
+		return arrival;
+	}
+
+	public void setArrival(Long arrival) {
+		this.arrival = arrival;
+	}
+
+	public Map<Long, String> getArrivals() {
+		return arrivals;
+	}
+
+	public void setArrivals(Map<Long, String> arrivals) {
+		this.arrivals = arrivals;
+	}
 	
 }
