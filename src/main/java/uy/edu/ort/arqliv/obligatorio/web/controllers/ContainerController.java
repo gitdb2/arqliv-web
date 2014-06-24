@@ -43,10 +43,10 @@ public class ContainerController {
 	private ContainerService containerService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list( Model model) {
+	public String list( Model model, HttpSession session) {
 		List<Container> containers = new ArrayList<>();
 		try {
-			containers = containerService.list("rodrigo");
+			containers = containerService.list((String)session.getAttribute("user"));
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
@@ -61,12 +61,12 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String submitCreate(@Valid Container container, BindingResult result) {
+	public String submitCreate(@Valid Container container, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
             return "containers/create";
         }
 		try {
-			containerService.store("rodrigo", container);
+			containerService.store((String)session.getAttribute("user"), container);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
@@ -80,9 +80,9 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String submitDelete(@Valid int id) {
+	public String submitDelete(@Valid int id, HttpSession session) {
 		try {
-			containerService.delete("rodrigo", id);
+			containerService.delete((String)session.getAttribute("user"), id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
@@ -90,11 +90,11 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String setupEdit( Model model, @RequestParam("id") int id) {
+	public String setupEdit( Model model, @RequestParam("id") int id, HttpSession session) {
 		Container container = null;
 		boolean serviceError = false;
 		try {
-			container = containerService.find("rodrigo", id);
+			container = containerService.find((String)session.getAttribute("user"), id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 			serviceError = true;
@@ -107,12 +107,12 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String submitEdit(@Valid Container container, BindingResult result) {
+	public String submitEdit(@Valid Container container, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
             return "containers/edit";
         }
 		try {
-			containerService.update("rodrigo", container);
+			containerService.update((String)session.getAttribute("user"), container);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
@@ -120,10 +120,10 @@ public class ContainerController {
 	}
 	
 	@RequestMapping(value = "/getPdfList", method =  { RequestMethod.GET, RequestMethod.POST} )
-	public ResponseEntity<byte[]> postPDF( Model model) {
+	public ResponseEntity<byte[]> postPDF( Model model, HttpSession session) {
 		List<Container> containers = new ArrayList<>();
 		try {
-			containers = containerService.list("rodrigo");
+			containers = containerService.list((String)session.getAttribute("user"));
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}

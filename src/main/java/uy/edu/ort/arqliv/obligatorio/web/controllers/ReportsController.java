@@ -56,7 +56,7 @@ public class ReportsController {
 		ReportsWrapper reportsWrapper = new ReportsWrapper();
 		if (month != null) {
 			try {
-				arrivals = reportsService.arrivalsByMonth("rodrigo", month);
+				arrivals = reportsService.arrivalsByMonth((String)session.getAttribute("user"), month);
 				reportsWrapper.setMonth(month);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
@@ -75,7 +75,7 @@ public class ReportsController {
 		List<Arrival> arrivals = new ArrayList<Arrival>();
 		if (month != null) {
 			try {
-				arrivals = reportsService.arrivalsByMonth("rodrigo", month);
+				arrivals = reportsService.arrivalsByMonth((String)session.getAttribute("user"), month);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
 			}
@@ -97,7 +97,7 @@ public class ReportsController {
 		ReportsWrapper reportsWrapper = new ReportsWrapper();
 		if (month != null && ship != null) {
 			try {
-				arrivals = reportsService.arrivalsByMonthByShip("rodrigo", month, ship);
+				arrivals = reportsService.arrivalsByMonthByShip((String)session.getAttribute("user"), month, ship);
 				reportsWrapper.setMonth(month);
 				reportsWrapper.setShip(ship);
 			} catch (CustomServiceException e) {
@@ -109,7 +109,7 @@ public class ReportsController {
 		reportsWrapper.setArrivals(arrivals);
 		model.addAttribute("reportsWrapper", reportsWrapper);
 		model.addAttribute("months", getMonths());
-		model.addAttribute("ships", getShips());
+		model.addAttribute("ships", getShips((String)session.getAttribute("user")));
 		return "reports/arrivalsbymonthbyship";
 	}
 	
@@ -120,7 +120,7 @@ public class ReportsController {
 		List<Arrival> arrivals = new ArrayList<Arrival>();
 		if (month != null) {
 			try {
-				arrivals = reportsService.arrivalsByMonthByShip("rodrigo", month, ship);
+				arrivals = reportsService.arrivalsByMonthByShip((String)session.getAttribute("user"), month, ship);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
 			}
@@ -140,7 +140,7 @@ public class ReportsController {
 		ReportsWrapper reportsWrapper = new ReportsWrapper();
 		if (month != null) {
 			try {
-				departures = reportsService.departuresByMonth("rodrigo", month);
+				departures = reportsService.departuresByMonth((String)session.getAttribute("user"), month);
 				reportsWrapper.setMonth(month);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
@@ -160,9 +160,10 @@ public class ReportsController {
 			@RequestParam(value="ship", required=false) Long ship) {
 		List<Departure> departures = new ArrayList<Departure>();
 		ReportsWrapper reportsWrapper = new ReportsWrapper();
+		String user = (String)session.getAttribute("user");
 		if (month != null && ship != null) {
 			try {
-				departures = reportsService.departuresByMonthByShip("rodrigo", month, ship);
+				departures = reportsService.departuresByMonthByShip(user, month, ship);
 				reportsWrapper.setMonth(month);
 				reportsWrapper.setShip(ship);
 			} catch (CustomServiceException e) {
@@ -174,7 +175,7 @@ public class ReportsController {
 		reportsWrapper.setDepartures(departures);
 		model.addAttribute("reportsWrapper", reportsWrapper);
 		model.addAttribute("months", getMonths());
-		model.addAttribute("ships", getShips());
+		model.addAttribute("ships", getShips(user));
 		return "reports/departuresbymonthbyship";
 	}
 	
@@ -184,7 +185,7 @@ public class ReportsController {
 		List<Departure> departures = new ArrayList<Departure>();
 		if (month != null) {
 			try {
-				departures = reportsService.departuresByMonth("rodrigo", month);
+				departures = reportsService.departuresByMonth((String)session.getAttribute("user"), month);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
 			}
@@ -205,7 +206,7 @@ public class ReportsController {
 		List<Departure> departures = new ArrayList<Departure>();
 		if (month != null) {
 			try {
-				departures = reportsService.departuresByMonthByShip("rodrigo", month, ship);
+				departures = reportsService.departuresByMonthByShip((String)session.getAttribute("user"), month, ship);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
 			}
@@ -225,11 +226,11 @@ public class ReportsController {
 		return "reports/menu";
 	}
 	
-	private Map<Long, String> getShips() {
+	private Map<Long, String> getShips(String user) {
 		List<Ship> ships = new ArrayList<Ship>();
 		Map<Long, String> result = new HashMap<Long, String>();
 		try {
-			ships = shipService.list("rodrigo");
+			ships = shipService.list(user);
 			if (ships != null) {
 				for (Ship s : ships) {
 					result.put(s.getId(), "Id: " + s.getId() + ", Nombre:" + s.getName());

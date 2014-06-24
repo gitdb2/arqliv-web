@@ -46,10 +46,10 @@ public class ShipController {
 	private ShipService shipService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list( Model model) {
+	public String list( Model model, HttpSession session) {
 		List<Ship> ships = new ArrayList<>();
 		try {
-			ships = shipService.list("rodrigo");
+			ships = shipService.list((String)session.getAttribute("user"));
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
@@ -65,12 +65,12 @@ public class ShipController {
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String submitCreate(@Valid Ship newShip, BindingResult result) {
+	public String submitCreate(@Valid Ship newShip, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
             return "ships/create";
         }
 		try {
-			shipService.store("rodrigo", newShip);
+			shipService.store((String)session.getAttribute("user"), newShip);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
@@ -84,9 +84,9 @@ public class ShipController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String submitDelete(@Valid int id) {
+	public String submitDelete(@Valid int id, HttpSession session) {
 		try {
-			shipService.delete("rodrigo", id);
+			shipService.delete((String)session.getAttribute("user"), id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
@@ -94,11 +94,11 @@ public class ShipController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String setupEdit( Model model, @RequestParam("id") int id) {
+	public String setupEdit( Model model, @RequestParam("id") int id, HttpSession session) {
 		Ship ship = null;
 		boolean serviceError = false;
 		try {
-			ship = shipService.find("rodrigo", id);
+			ship = shipService.find((String)session.getAttribute("user"), id);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 			serviceError = true;
@@ -114,13 +114,13 @@ public class ShipController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String submitEdit(@Valid ShipEditWrapper shipEditWrapper, BindingResult result) {
+	public String submitEdit(@Valid ShipEditWrapper shipEditWrapper, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
             return "ships/edit";
         }
 		try {
 			Date arrivalDate = sdf.parse(shipEditWrapper.getArrivalDate());
-			shipService.update("rodrigo", shipEditWrapper.getShip(), arrivalDate);
+			shipService.update((String)session.getAttribute("user"), shipEditWrapper.getShip(), arrivalDate);
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
@@ -142,10 +142,10 @@ public class ShipController {
 
 	
 	@RequestMapping(value = "/getPdfList", method =  { RequestMethod.GET, RequestMethod.POST} )
-	public ResponseEntity<byte[]> postPDF( Model model) {
+	public ResponseEntity<byte[]> postPDF( Model model, HttpSession session) {
 		List<Ship> ships = new ArrayList<>();
 		try {
-			ships = shipService.list("rodrigo");
+			ships = shipService.list((String)session.getAttribute("user"));
 		} catch (CustomServiceException e) {
 			e.printStackTrace();
 		}
