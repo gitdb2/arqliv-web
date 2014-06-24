@@ -4,7 +4,7 @@
 <html>
 
 <head>
-	<meta http-equiv="refresh" content="0;URL=home/menu.html">
+	<meta http-equiv="refresh" content="0;URL=login.html">
 </head>
 <body bgcolor='#ffffff' link='#21648D'>
 
@@ -13,7 +13,7 @@
 		<td align="center" valign="middle" class="title">
 			<font face="Arial" size="18px" color="ffffff">
 				
-				<a href="home/menu.html">Redirigiendo...</a>
+				<a href="login.html">Redirigiendo...</a>
 			</font>
 		</td>
 	</tr>
