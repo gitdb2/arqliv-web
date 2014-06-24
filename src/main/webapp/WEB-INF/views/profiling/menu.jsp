@@ -9,11 +9,12 @@
 <title>Profiling</title>
 </head>
 <body>
-	<h1>Hola ${user}</h1>
+	
 	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+			<h1>Hola ${user}</h1>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/profiling/avg.html"/>">
 					Tiempo promedio de servicios</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/profiling/min.html"/>">

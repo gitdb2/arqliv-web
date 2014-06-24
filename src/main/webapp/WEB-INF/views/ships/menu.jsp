@@ -2,30 +2,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 <title>Barcos</title>
 </head>
 <body>
-	<h1>Hola ${user}</h1>
-	
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/create.html"/>">
-					Alta</a>
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
-					Baja</a>
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
-					Modificar</a>
-				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>">
-					Listar</a>
-				<br /> <a
-					class="btn btn-default btn-lg btn-block"
-					href="<c:url value="/home/menu.html"/>">Menu Principal</a>
-				
+				<h1>Hola ${user}</h1>
+
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/create.html"/>"> Alta</a> <a
+					class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>"> Baja</a> <a
+					class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>"> Modificar</a> <a
+					class="btn btn-primary btn-lg btn-block" href="<c:url value="/ships/list.html"/>"> Listar</a> <br /> <a
+					class="btn btn-default btn-lg btn-block" href="<c:url value="/home/menu.html"/>">Menu Principal</a>
+
 			</div>
 		</div>
 	</div>
