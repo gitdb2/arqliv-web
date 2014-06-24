@@ -27,7 +27,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 ">
-				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/departures/menu.html"/>">Menu Arribos</a> <br>
+				<br> <br> <br> <a class="btn btn-default" href="<c:url value="/departures/menu.html"/>">Menu Partidas</a> <br>
 
 				<h1>Alta de Partida</h1>
 
