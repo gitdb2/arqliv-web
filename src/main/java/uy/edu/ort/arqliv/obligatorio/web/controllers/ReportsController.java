@@ -26,6 +26,7 @@ import uy.edu.ort.arqliv.obligatorio.common.ShipService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.dominio.Container;
+import uy.edu.ort.arqliv.obligatorio.dominio.Departure;
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 import uy.edu.ort.arqliv.obligatorio.web.controllers.models.ReportsWrapper;
 import uy.edu.ort.arqliv.obligatorio.web.pdf.PDFRenderer;
@@ -80,7 +81,7 @@ public class ReportsController {
 			}
 			String filename = "reports_arrival_by_month_"+ System.currentTimeMillis();
 			String fileExtension = ".pdf";
-			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes", getPdfTitles(), getPdfLines(arrivals), "");
+			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes", getPdfTitlesArrival(), getPdfLinesArrival(arrivals), "");
 			byte[] contents = renderer.render();
 		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
 		    return response;
@@ -125,7 +126,7 @@ public class ReportsController {
 			}
 			String filename = "reports_arrival_by_month_by_ship_"+ System.currentTimeMillis();
 			String fileExtension = ".pdf";
-			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes por Barco", getPdfTitles(), getPdfLines(arrivals), "");
+			PDFRenderer renderer = new PDFRenderer(filename, "Arribos por mes por Barco", getPdfTitlesArrival(), getPdfLinesArrival(arrivals), "");
 			byte[] contents = renderer.render();
 		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
 		    return response;
@@ -133,15 +134,96 @@ public class ReportsController {
 		return null;
 	}
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	@RequestMapping(value = "/departuresbymonth", method = RequestMethod.GET)
+	public String departuresByMonth(Model model, HttpSession session, @RequestParam(value="month", required=false) Integer month) {
+		List<Departure> departures = new ArrayList<Departure>();
+		ReportsWrapper reportsWrapper = new ReportsWrapper();
+		if (month != null) {
+			try {
+				departures = reportsService.departuresByMonth("rodrigo", month);
+				reportsWrapper.setMonth(month);
+			} catch (CustomServiceException e) {
+				logger.error("Error al consultar al servicio", e);
+			}
+		} else {
+			reportsWrapper.setMonth(1);
+		}
+		reportsWrapper.setDepartures(departures);
+		model.addAttribute("reportsWrapper", reportsWrapper);
+		model.addAttribute("months", getMonths());
+		return "reports/departuresbymonth";
+	}
+	
+	@RequestMapping(value = "/departuresbymonthbyship", method = RequestMethod.GET)
+	public String departuresByMonthByShip(Model model, HttpSession session, 
+			@RequestParam(value="month", required=false) Integer month,
+			@RequestParam(value="ship", required=false) Long ship) {
+		List<Departure> departures = new ArrayList<Departure>();
+		ReportsWrapper reportsWrapper = new ReportsWrapper();
+		if (month != null && ship != null) {
+			try {
+				departures = reportsService.departuresByMonthByShip("rodrigo", month, ship);
+				reportsWrapper.setMonth(month);
+				reportsWrapper.setShip(ship);
+			} catch (CustomServiceException e) {
+				logger.error("Error al consultar al servicio", e);
+			}
+		} else {
+			reportsWrapper.setMonth(1);
+		}
+		reportsWrapper.setDepartures(departures);
+		model.addAttribute("reportsWrapper", reportsWrapper);
+		model.addAttribute("months", getMonths());
+		model.addAttribute("ships", getShips());
+		return "reports/departuresbymonthbyship";
+	}
+	
+	@RequestMapping(value = "/getPdfDeparturesByMonth", method =  { RequestMethod.GET, RequestMethod.POST } )
+	public ResponseEntity<byte[]> postPDFDeparturesByMonth(Model model, HttpSession session, 
+			@RequestParam(value="month", required=false) Integer month) {
+		List<Departure> departures = new ArrayList<Departure>();
+		if (month != null) {
+			try {
+				departures = reportsService.departuresByMonth("rodrigo", month);
+			} catch (CustomServiceException e) {
+				logger.error("Error al consultar al servicio", e);
+			}
+			String filename = "reports_departures_by_month_"+ System.currentTimeMillis();
+			String fileExtension = ".pdf";
+			PDFRenderer renderer = new PDFRenderer(filename, "Partidas por mes", getPdfTitlesDeparture(), getPdfLinesDeparture(departures), "");
+			byte[] contents = renderer.render();
+		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
+		    return response;
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "/getPdfDeparturesByMonthByShip", method =  { RequestMethod.GET, RequestMethod.POST } )
+	public ResponseEntity<byte[]> postPDFDeparturesByMonthByShip(Model model, HttpSession session, 
+			@RequestParam(value="month", required=false) Integer month, 
+			@RequestParam(value="ship", required=false) Long ship) {
+		List<Departure> departures = new ArrayList<Departure>();
+		if (month != null) {
+			try {
+				departures = reportsService.departuresByMonthByShip("rodrigo", month, ship);
+			} catch (CustomServiceException e) {
+				logger.error("Error al consultar al servicio", e);
+			}
+			String filename = "reports_departures_by_month_by_ship_"+ System.currentTimeMillis();
+			String fileExtension = ".pdf";
+			PDFRenderer renderer = new PDFRenderer(filename, "Partidas por mes por Barco", getPdfTitlesDeparture(), getPdfLinesDeparture(departures), "");
+			byte[] contents = renderer.render();
+		    ResponseEntity<byte[]> response = createResponse(filename, fileExtension, contents);
+		    return response;
+		}
+		return null;
+	}
+	
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public String containerHome(Model model, HttpSession session) {
 		model.addAttribute("user", session.getAttribute("user"));
 		return "reports/menu";
 	}
-	
 	
 	private Map<Long, String> getShips() {
 		List<Ship> ships = new ArrayList<Ship>();
@@ -168,7 +250,7 @@ public class ReportsController {
 		return response;
 	}
 	
-	private String getPdfTitles() {
+	private String getPdfTitlesArrival() {
 		return String.format("%10s  " // ID
 				+ "%-15s  " // "Fecha de arribo",
 				+ "%15s  " // "Id de barco",
@@ -179,7 +261,18 @@ public class ReportsController {
 				, "Pais de Origen",	"Ids contenedores", "Desc. Contenedores");
 	}
 	
-	private List<String> getPdfLines(List<Arrival> arrivals) {
+	private String getPdfTitlesDeparture() {
+		return String.format("%10s  " // ID
+				+ "%-15s  " // "Fecha de partida",
+				+ "%15s  " // "Id de barco",
+				+ "%-15s  " // "Pais de Destino",
+				+ "%-20s  " // "Contenedores"
+				+ "%-20s " // "Descripcion de Contenedores"
+				, "Id", "Fecha de partida", "Id de barco"
+				, "Pais de Destino", "Ids contenedores", "Desc. Contenedores");
+	}
+	
+	private List<String> getPdfLinesArrival(List<Arrival> arrivals) {
 		List<String> lines = new ArrayList<>();
 		for (Arrival arr : arrivals) {
 			lines.add(String.format("%10d  " // ID
@@ -194,6 +287,25 @@ public class ReportsController {
 					, arr.getShipOrigin()
 					, generateContainerList(arr.getContainers()).toString()
 					, arr.getContainersDescriptions()));
+		}
+		return lines;
+	}
+	
+	private List<String> getPdfLinesDeparture(List<Departure> departures) {
+		List<String> lines = new ArrayList<>();
+		for (Departure dep : departures) {
+			lines.add(String.format("%10d  " // ID
+					+ "%-15s  " // "Fecha de partida",
+					+ "%15d  " // "Id de barco",
+					+ "%-15s  " // "Destino del barco",
+					+ "%-20s  " // "Contenedores"
+					+ "%-20s" // "Descripcion de Contenedores"
+					, dep.getId()
+					, sdfOut.format(dep.getDepartureDate())
+					, dep.getShip().getId()
+					, dep.getShipDestination()
+					, generateContainerList(dep.getContainers()).toString()
+					, dep.getContainersDescriptions()));
 		}
 		return lines;
 	}
@@ -224,6 +336,5 @@ public class ReportsController {
 		months.put(12, "Diciembre");
 		return months;
 	}
-	
 	
 }

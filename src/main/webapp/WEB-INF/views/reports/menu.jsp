@@ -18,6 +18,10 @@
 					Arribos por mes</a>
 				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/reports/arrivalsbymonthbyship.html"/>">
 					Arribos por mes por Barco</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/reports/departuresbymonth.html"/>">
+					Partidas por mes</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<c:url value="/reports/departuresbymonthbyship.html"/>">
+					Partidas por mes por Barco</a>
 			</div>
 		</div>
 	</div>
