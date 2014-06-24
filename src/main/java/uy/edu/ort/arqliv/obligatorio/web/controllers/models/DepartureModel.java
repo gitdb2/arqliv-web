@@ -1,7 +1,9 @@
 package uy.edu.ort.arqliv.obligatorio.web.controllers.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.dominio.Departure;
 
 /**
@@ -20,6 +23,8 @@ import uy.edu.ort.arqliv.obligatorio.dominio.Departure;
 public class DepartureModel {
 
 	private Long departureId;
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	@NotNull
 	@DateTimeFormat(pattern = "yyyyMMdd")
@@ -134,6 +139,14 @@ public class DepartureModel {
 
 	public void setArrivals(Map<Long, String> arrivals) {
 		this.arrivals = arrivals;
+	}
+
+	public void setArrivalsFromList(List<Arrival> arrivals) {
+		Map<Long, String> arrivalsMap = new HashMap<Long, String>();
+		for (Arrival arr : arrivals) {
+			arrivalsMap.put(arr.getId(), "Id:" + arr.getId() + ", Fecha de arribo:" + sdf.format(arr.getArrivalDate()));
+		}
+		this.setArrivals(arrivalsMap);
 	}
 	
 }

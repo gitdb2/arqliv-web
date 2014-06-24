@@ -35,13 +35,19 @@
 					<form:errors class="error" />
 					<form:hidden path="departureId" />
 
-
 					<div class="form-group">
 						<label class="col-lg-4 control-label" for="departureDate">Fecha de Partida: </label>
 						<div class="col-lg-8">
 							<form:input class="form-control" path="departureDate" id="departureDate"></form:input>
 							<form:errors path="departureDate" class="error"></form:errors>
 						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-lg-4 control-label" for="arrivalInput">Arribo asociado a la Partida:</label>
+						<form:select path="arrival" id="arrival">
+   							<form:options items="${departureModel.arrivals}"/>
+						</form:select>
 					</div>
 
 					<div class="form-group">
@@ -59,7 +65,6 @@
 							<form:errors path="shipDestination" class="error"></form:errors>
 						</div>
 					</div>
-
 
 					<div class="form-group">
 						<label class="col-lg-4 control-label" for="containersDescriptions">Desc. Contenedores: </label>

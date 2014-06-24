@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import uy.edu.ort.arqliv.obligatorio.common.ArrivalService;
 import uy.edu.ort.arqliv.obligatorio.common.DepartureService;
 import uy.edu.ort.arqliv.obligatorio.common.exceptions.CustomServiceException;
+import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.dominio.Departure;
 import uy.edu.ort.arqliv.obligatorio.web.controllers.models.DepartureModel;
 import uy.edu.ort.arqliv.obligatorio.web.controllers.models.Error;
@@ -41,6 +43,9 @@ public class DepartureController {
 
 	@Autowired
 	private DepartureService departureService;
+	
+	@Autowired
+	private ArrivalService arrivalService;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -84,14 +89,20 @@ public class DepartureController {
 	public String setupCreate(Model model, HttpSession session) {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
 		model.addAttribute("user", user);
-
+		List<Arrival> arrivals = new ArrayList<Arrival>();
+		try {
+			arrivals = arrivalService.list(user);
+		} catch (CustomServiceException e) {
+			logger.error(e.getMessage(), e);
+			return "departures/create";
+		}
 		DepartureModel departureModel = new DepartureModel();
 		departureModel.setDepartureDate(new Date());
-
+		departureModel.setArrivalsFromList(arrivals);
 		model.addAttribute("departureModel", departureModel);
 		return "departures/create";
 	}
-
+	
 	/**
 	 * On submit del formulario de crear, toma los datos del modelo, crea la entidad y la persiste
 	 * @param departureModel
