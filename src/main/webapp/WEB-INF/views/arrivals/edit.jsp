@@ -91,11 +91,11 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
 	<script>
-		$(function() {
-			$('#arrivalDate').datepicker({
-				format : 'yyyymmdd'
-			});
-		});
+// 		$(function() {
+// 			$('#arrivalDate').datepicker({
+// 				format : 'yyyymmdd'
+// 			});
+// 		});
 	</script>
 
 </body>

@@ -53,7 +53,7 @@
 					<form:input path="shipId" id="shipId" value="${departureModel.shipId}" type="hidden"></form:input>
 
 					<div class="form-group">
-						<label class="col-lg-4 control-label" for="shipDestination">Pais de Origen: </label>
+						<label class="col-lg-4 control-label" for="shipDestination">Pais de Destino: </label>
 						<div class="col-lg-8">
 							<form:input class="form-control" path="shipDestination" id="shipDestination"></form:input>
 							<form:errors path="shipDestination" class="error"></form:errors>
@@ -88,11 +88,11 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
 	<script>
-		$(function() {
-			$('#departureDate').datepicker({
-				format : 'yyyymmdd'
-			});
-		});
+// 		$(function() {
+// 			$('#departureDate').datepicker({
+// 				format : 'yyyymmdd'
+// 			});
+// 		});
 	</script>
 
 </body>
