@@ -65,7 +65,7 @@ public class DepartureController {
 
 		List<Departure> departures = new ArrayList<>();
 		try {
-			departures = departureService.list("rodrigo");
+			departures = departureService.list((String)session.getAttribute("user"));
 		} catch (CustomServiceException e) {
 			logger.error(e.getMessage(), e);
 		}

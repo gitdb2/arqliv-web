@@ -53,7 +53,7 @@ public class ProfilingController {
 		ProfilingWrapper profilingWrapper = new ProfilingWrapper();
 		if (forDate != null) {
 			try {
-				averages = profilingService.avgServiceTime("rodrigo", forDate);
+				averages = profilingService.avgServiceTime((String)session.getAttribute("user"), forDate);
 				profilingWrapper.setDate(dateString);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
@@ -73,7 +73,7 @@ public class ProfilingController {
 		ProfilingWrapper profilingWrapper = new ProfilingWrapper();
 		if (forDate != null) {
 			try {
-				mins = profilingService.minServiceTime("rodrigo", forDate);
+				mins = profilingService.minServiceTime((String)session.getAttribute("user"), forDate);
 				profilingWrapper.setDate(dateString);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
@@ -93,7 +93,7 @@ public class ProfilingController {
 		ProfilingWrapper profilingWrapper = new ProfilingWrapper();
 		if (forDate != null) {
 			try {
-				maxs = profilingService.maxServiceTime("rodrigo", forDate);
+				maxs = profilingService.maxServiceTime((String)session.getAttribute("user"), forDate);
 				profilingWrapper.setDate(dateString);
 			} catch (CustomServiceException e) {
 				logger.error("Error al consultar al servicio", e);
@@ -124,7 +124,7 @@ public class ProfilingController {
 		Date forDate = tryParseDate(dateString);
 		if (forDate != null) {
 			try {
-				averages = profilingService.avgServiceTime("rodrigo", forDate);
+				averages = profilingService.avgServiceTime((String)session.getAttribute("user"), forDate);
 			} catch (CustomServiceException e) {
 				e.printStackTrace();
 			}
@@ -144,7 +144,7 @@ public class ProfilingController {
 		Date forDate = tryParseDate(dateString);
 		if (forDate != null) {
 			try {
-				mins = profilingService.minServiceTime("rodrigo", new Date());
+				mins = profilingService.minServiceTime((String)session.getAttribute("user"), new Date());
 			} catch (CustomServiceException e) {
 				e.printStackTrace();
 			}
@@ -164,7 +164,7 @@ public class ProfilingController {
 		Date forDate = tryParseDate(dateString);
 		if (forDate != null) {
 			try {
-				maxs = profilingService.maxServiceTime("rodrigo", new Date());
+				maxs = profilingService.maxServiceTime((String)session.getAttribute("user"), new Date());
 			} catch (CustomServiceException e) {
 				e.printStackTrace();
 			}
