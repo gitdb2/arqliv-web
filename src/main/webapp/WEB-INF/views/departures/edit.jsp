@@ -54,8 +54,7 @@
 				<div class="form-group">
 					<label class="col-lg-4 control-label" for="shipId">Id de barco: </label>
 					<div class="col-lg-8">
-						<form:input class="form-control" path="shipId" id="shipId"></form:input>
-						<form:errors path="shipId" class="error"></form:errors>
+						<c:out value="${departureModel.shipId}"></c:out>
 					</div>
 				</div>
 
