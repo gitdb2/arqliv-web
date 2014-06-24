@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.validation.constraints.NotNull;
 
@@ -144,9 +146,23 @@ public class DepartureModel {
 	public void setArrivalsFromList(List<Arrival> arrivals) {
 		Map<Long, String> arrivalsMap = new HashMap<Long, String>();
 		for (Arrival arr : arrivals) {
-			arrivalsMap.put(arr.getId(), "Id:" + arr.getId() + ", Fecha de arribo:" + sdf.format(arr.getArrivalDate()));
+			arrivalsMap.put(arr.getId(), 
+					"Id:" + arr.getId()	
+					+ ", Fecha de arribo:" + sdf.format(arr.getArrivalDate())
+					+ ", Barco: " + arr.getShip().getId() + " (" + arr.getShip().getName() + ")");
 		}
 		this.setArrivals(arrivalsMap);
+	}
+
+	public Long parseShip() {
+		Long ret = null;
+		String toParse = arrivals.get(arrival);
+		Pattern pattern = Pattern.compile("(Barco: (\\d+)).*");
+		Matcher m = pattern.matcher(toParse);
+		while (m.find()) {
+			ret = Long.parseLong(m.group(2));
+		}
+		return ret;
 	}
 	
 }

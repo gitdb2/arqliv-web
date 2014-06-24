@@ -50,13 +50,7 @@
 						</form:select>
 					</div>
 
-					<div class="form-group">
-						<label class="col-lg-4 control-label" for="shipId">Id de barco: </label>
-						<div class="col-lg-8">
-							<form:input class="form-control" path="shipId" id="shipId"></form:input>
-							<form:errors path="shipId" class="error"></form:errors>
-						</div>
-					</div>
+					<form:input path="shipId" id="shipId" value="${departureModel.shipId}" type="hidden"></form:input>
 
 					<div class="form-group">
 						<label class="col-lg-4 control-label" for="shipDestination">Pais de Origen: </label>

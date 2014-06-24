@@ -35,7 +35,6 @@
 					<form:errors class="error" />
 					<form:hidden path="arrivalId" />
 
-
 					<div class="form-group">
 						<label class="col-lg-4 control-label" for="arrivalDate">Fecha de Arribo: </label>
 						<div class="col-lg-8">

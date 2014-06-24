@@ -121,14 +121,17 @@ public class DepartureController {
 			return "departures/create";
 		}
 		try {
+			List<Arrival> arrivals = arrivalService.list(user);
+			departureModel.setArrivalsFromList(arrivals);
+			
 			Set<Long> containerSet = new HashSet<>(departureModel.getContainers());
 
 			Departure departure = new Departure();
 			departure.setDepartureDate(departureModel.getDepartureDate());
 			departure.setShipDestination(departureModel.getShipDestination());
 			departure.setContainersDescriptions(departureModel.getContainersDescriptions());
-
-			Long id = departureService.store(user, departure, departureModel.getShipId(), new ArrayList<>(containerSet), departureModel.getArrival());
+			
+			Long id = departureService.store(user, departure, departureModel.parseShip(), new ArrayList<>(containerSet), departureModel.getArrival());
 
 			logger.info("Departure id: " + id + " creado");
 		} catch (CustomServiceException e) {
