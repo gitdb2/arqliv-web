@@ -117,13 +117,17 @@ public class DepartureController {
 		String user = (String) (session.getAttribute("user") == null ? "dummy" : session.getAttribute("user"));
 		model.addAttribute("user", user);
 
+		
+		List<Arrival> arrivals =  arrivalService.list(user);
+		departureModel.setArrivalsFromList(arrivals);
+
 		if (result.hasErrors()) {
+		
+			model.addAttribute("departureModel", departureModel);
 			return "departures/create";
 		}
 		try {
-			List<Arrival> arrivals = arrivalService.list(user);
-			departureModel.setArrivalsFromList(arrivals);
-			
+		
 			Set<Long> containerSet = new HashSet<>(departureModel.getContainers());
 
 			Departure departure = new Departure();
@@ -137,6 +141,7 @@ public class DepartureController {
 		} catch (CustomServiceException e) {
 			logger.error(e.getMessage(), e);
 			result.reject("error", e.getMessage());
+			model.addAttribute("departureModel", departureModel);
 			return "departures/create";
 		}
 		return "redirect:/departures/list.html";
