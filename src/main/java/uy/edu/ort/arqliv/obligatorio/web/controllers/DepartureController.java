@@ -255,7 +255,7 @@ public class DepartureController {
 			boolean hayCambios = false;
 
 			if (departureModel.getDepartureDate() != null) {
-				if (!sdf.format(departure.getDepartureDate()).equals(sdf.format(departure.getDepartureDate()))) {
+				if (!sdf.format(departure.getDepartureDate()).equals(sdf.format(departureModel.getDepartureDate()))) {
 					departure.setDepartureDate(departureModel.getDepartureDate());
 					hayCambios = true;
 				}

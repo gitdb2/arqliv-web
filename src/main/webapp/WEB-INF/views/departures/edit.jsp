@@ -66,16 +66,13 @@
 					</div>
 				</div>
 
-
 				<div class="form-group">
 					<label class="col-lg-4 control-label" for="containersDescriptions">Desc. Contenedores: </label>
 					<div class="col-lg-8">
 						<form:input class="form-control" path="containersDescriptions" id="containersDescriptions"></form:input>
 						<form:errors path="containersDescriptions" class="error"></form:errors>
-
 					</div>
 				</div>
-
 
 				<div class="form-group">
 					<label class="col-lg-4 control-label" for="containers">Ids contenedores (separado por comas): </label>
